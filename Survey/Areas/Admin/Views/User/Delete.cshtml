@@ -1,0 +1,28 @@
+﻿@using System.Web.Optimization
+@model Survey.Core.Entities.UserIdentity
+
+@{
+    ViewBag.Title = "حذف کاربر";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>Delete @Model.UserName</h2>
+
+@using (var frm = Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Hidden("username", Model.Id)
+
+    <input type="submit" value="Delete @Model.UserName" class="btn btn-danger btn-lg" />
+}
+
+@section MainPage
+{
+    @Scripts.Render("~/bundles/mainPage")
+}
+
+@section UserPage
+{
+    @Scripts.Render("~/bundles/userPage")
+}

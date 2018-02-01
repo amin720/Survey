@@ -1,0 +1,133 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <title>@ViewBag.Title</title>
+
+    <!-- META SECTION -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- END META SECTION -->
+    <!-- CSS INCLUDE -->
+    @Styles.Render("~/bundles/baseStyles")
+    <!-- EOF CSS INCLUDE -->
+</head>
+
+<body>
+
+    <!-- APP WRAPPER -->
+    <div class="app app-rtl">
+
+        <!-- START APP CONTAINER -->
+        <div class="app-container">
+
+            <!-- START SIDEBAR -->
+            <div class="app-sidebar app-navigation app-navigation-style-default dir-right" data-type="close-other">
+                <a href="index.html" class="app-navigation-logo"></a>
+                <nav>
+                    <ul>
+                        <li class="title">اصلی</li>
+                        <li><a href="@Url.Action("Index","Admin")"><span class="nav-icon-hexa text-bloody-100">داشبرد</span> داشبرد</a></li>
+                        <li>
+                            <a href="#"><span class="nav-icon-hexa text-orange-100">کاربر</span> کاربر </a>
+                            <ul>
+                                <li><a href="@Url.Action("Index","User")"><span class="nav-icon-hexa">لیست</span> لیست کاربران</a></li>
+                                <li><a href="@Url.Action("Create","User")"><span class="nav-icon-hexa">ایجاد</span> ایجاد کاربر</a></li>
+                            </ul>
+                        </li>
+                        <li class="title">نظرسنجنی</li>
+                        <li>
+                            <a href="#"><span class="nav-icon-hexa text-orange-100">نظرسنجی</span> نظرسنجی </a>
+                            <ul>
+                                <li><a href="#"><span class="nav-icon-hexa">لیست</span> لیست نظرسنجی</a></li>
+                                <li> <a href="CreateSurvey.html"><span class="nav-icon-hexa">ایجاد</span> ایجاد نظرسنجی</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- END SIDEBAR -->
+            <!-- START APP CONTENT -->
+            <div class="app-content app-sidebar-right">
+                <!-- START APP HEADER -->
+                <div class="app-header">
+                    <ul class="app-header-buttons">
+                        <li>
+                            <div class="contact contact-rounded contact-bordered contact-lg contact-ps-controls">
+                                <img src="@Url.Content("~/Areas/Admin/Assets/img/user/no-image.png")" alt="admin">
+                                <div class="contact-container">
+                                    <a href="#">@ViewBag.Username</a>
+                                    <span>@ViewBag.DisplayName</span>
+                                </div>
+                                <div class="contact-controls">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-default btn-icon" data-toggle="dropdown"><span class="icon-cog"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#"><span class="icon-cog"></span> Settings</a></li>
+                                            <li><a href="#"><span class="icon-envelope"></span> Messages <span class="label label-danger pull-right">+24</span></a></li>
+                                            <li><a href="#"><span class="icon-users"></span> Contacts <span class="label label-default pull-right">76</span></a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="@Url.Action("Logout","Admin")"><span class="icon-exit"></span> خروج</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul class="app-header-buttons pull-right">
+                        <li class="visible-mobile"><a href="#" class="btn btn-link btn-icon" data-sidebar-toggle=".app-sidebar.dir-right"><span class="icon-menu"></span></a></li>
+                        <li class="hidden-mobile"><a href="#" class="btn btn-link btn-icon" data-sidebar-minimize=".app-sidebar.dir-right"><span class="icon-list"></span></a></li>
+                    </ul>
+                </div>
+                <!-- END APP HEADER  -->
+                <!-- START PAGE HEADING -->
+                <div class="app-heading app-heading-bordered app-heading-page">
+                    <div class="icon icon-lg">
+                        <span class="icon-laptop-phone"></span>
+                    </div>
+                    <div class="title">
+                        <h1>Boooya - Admin Template</h1>
+                        <p>The revolution in admin template build</p>
+                    </div>
+                </div>
+                <div class="app-heading-container app-heading-bordered bottom">
+                    <ul class="breadcrumb">
+                        <li class="active">Dashboard</li>
+                        <li><a href="#">Application</a></li>
+                    </ul>
+                </div>
+                <!-- END PAGE HEADING -->
+                <!-- START PAGE CONTAINER -->
+                <div class="container">
+                    @RenderBody()
+                </div>
+                <!-- END PAGE CONTAINER -->
+            </div>
+            <!-- END APP CONTENT -->
+        </div>
+        <!-- END APP CONTAINER -->
+        <!-- APP OVERLAY -->
+        <div class="app-overlay"></div>
+        <!-- END APP OVERLAY -->
+    </div>
+    <!-- END APP WRAPPER -->
+    <!-- IMPORTANT SCRIPTS -->
+    @Scripts.Render("~/bundles/baseScripts")
+    <!-- END IMPORTANT SCRIPTS -->
+    <!-- THIS PAGE SCRIPTS -->
+    @RenderSection("MainPage", false)
+@RenderSection("UserPage", false)
+@*<script src="~/Areas/Admin/Assets/js/vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>*@
+    <!-- END THIS PAGE SCRIPTS -->
+    <!-- APP SCRIPTS -->
+    @Scripts.Render("~/bundles/appScripts");
+    <!-- END APP SCRIPTS -->
+</body>
+
+</html>

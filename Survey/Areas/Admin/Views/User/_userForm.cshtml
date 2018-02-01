@@ -1,0 +1,78 @@
+﻿@model Survey.Areas.Admin.ViewModels.UserViewModel
+
+@using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.SelectedRole, "", new { @class = "text-danger" })
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-3 control-label">نام کاربری</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="UserName" placeholder="نام کاربری" required value="@Model.UserName">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-3 control-label">ایمیل</label>
+                <div class="col-md-9">
+                    <input type="email" class="form-control" name="Email" placeholder="ایمیل" required value="@Model.Email">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-3 control-label">رمزعبور</label>
+                <div class="col-md-9">
+                    <input type="password" class="form-control" name="NewPassword" placeholder="رمزعبور" required >
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-3 control-label">تکرار رمزعبور</label>
+                <div class="col-md-9">
+                    <input type="password" class="form-control" name="ConfirmPassword" placeholder="تکرار رمزعبور" required>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-3 control-label">نقش</label>
+                <div class="col-md-9">
+                    <select class="form-control bs-select" name="SelectedRole" data-live-search="true" data-placeholder="نقش" >
+                        <option>@Model.SelectedRole</option>
+                        @foreach (var item in Model.Roles)
+                    {
+                        <option value="@item.Text">@item.Text</option>
+                }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-3 control-label">نام نمایشی</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="DisplayName" placeholder="نام نمایشی" required value="@Model.DisplayName">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="submit" class="btn mce-btn-large btn-info" value="ثبت" />
+
+}

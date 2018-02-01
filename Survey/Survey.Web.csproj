@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,11 +45,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -93,6 +97,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -100,6 +107,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -125,24 +135,407 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Assets\css\custom.css" />
+    <Content Include="Areas\Admin\Assets\css\fonts\fontawesome-webfont.svg" />
+    <Content Include="Areas\Admin\Assets\css\fonts\Linearicons-Free.svg" />
+    <Content Include="Areas\Admin\Assets\css\styles.css" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content-style.css" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content.inline.min.css" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content.min.css" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\tinymce-small.svg" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\tinymce.svg" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\img\anchor.gif" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\img\loader.gif" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\img\object.gif" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\img\trans.gif" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\skin.ie7.min.css" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\skin.min.css" />
+    <Content Include="Areas\Admin\Assets\img\bg-1.jpg" />
+    <Content Include="Areas\Admin\Assets\img\boooya.png" />
+    <Content Include="Areas\Admin\Assets\img\icons\csv.png" />
+    <Content Include="Areas\Admin\Assets\img\icons\json.png" />
+    <Content Include="Areas\Admin\Assets\img\icons\pdf.png" />
+    <Content Include="Areas\Admin\Assets\img\icons\png.png" />
+    <Content Include="Areas\Admin\Assets\img\icons\ppt.png" />
+    <Content Include="Areas\Admin\Assets\img\icons\sql.png" />
+    <Content Include="Areas\Admin\Assets\img\icons\txt.png" />
+    <Content Include="Areas\Admin\Assets\img\icons\word.png" />
+    <Content Include="Areas\Admin\Assets\img\icons\xls.png" />
+    <Content Include="Areas\Admin\Assets\img\icons\xml.png" />
+    <Content Include="Areas\Admin\Assets\img\logo-dark-lg.png" />
+    <Content Include="Areas\Admin\Assets\img\logo-dark-sm.png" />
+    <Content Include="Areas\Admin\Assets\img\logo-dark.png" />
+    <Content Include="Areas\Admin\Assets\img\logo-footer.png" />
+    <Content Include="Areas\Admin\Assets\img\logo-lg.png" />
+    <Content Include="Areas\Admin\Assets\img\logo-rtl.png" />
+    <Content Include="Areas\Admin\Assets\img\logo-sm.png" />
+    <Content Include="Areas\Admin\Assets\img\logo-white-lg.png" />
+    <Content Include="Areas\Admin\Assets\img\logo.fw.png" />
+    <Content Include="Areas\Admin\Assets\img\logo.png" />
+    <Content Include="Areas\Admin\Assets\img\navigation\hexa.png" />
+    <Content Include="Areas\Admin\Assets\img\switch\switch.png" />
+    <Content Include="Areas\Admin\Assets\img\user\no-image.png" />
+    <Content Include="Areas\Admin\Assets\js\app.js" />
+    <Content Include="Areas\Admin\Assets\js\app_demo.js" />
+    <Content Include="Areas\Admin\Assets\js\app_demo_calendar.js" />
+    <Content Include="Areas\Admin\Assets\js\app_demo_dashboard.js" />
+    <Content Include="Areas\Admin\Assets\js\app_faq.js" />
+    <Content Include="Areas\Admin\Assets\js\app_plugins.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-daterange\daterangepicker.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-datetimepicker\bootstrap-datetimepicker.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\bootstrap-select.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-ar_AR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-bg_BG.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-cro_CRO.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-cs_CZ.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-da_DK.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-de_DE.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-en_US.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-es_CL.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-eu.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-fa_IR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-fi_FI.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-fr_FR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-hu_HU.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-id_ID.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-it_IT.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-ko_KR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-lt_LT.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-nb_NO.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-nl_NL.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-pl_PL.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-pt_BR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-pt_PT.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-ro_RO.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-ru_RU.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-sk_SK.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-sl_SI.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-sv_SE.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-tr_TR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-ua_UA.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-zh_CN.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-zh_TW.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-tagsinput\bootstrap-tagsinput.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-tour\bootstrap-tour.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\codemirror\codemirror.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\codemirror\javascript.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\codemirror\modes\clike.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\codemirror\modes\css.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\codemirror\modes\htmlmixed.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\codemirror\modes\javascript.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\codemirror\modes\perl.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\codemirror\modes\php.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\codemirror\modes\python.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\codemirror\modes\xml.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\cropper\cropper.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\customscrollbar\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\customscrollbar\jquery.mCustomScrollbar.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\datatables\dataTables.bootstrap.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\datatables\jquery.dataTables.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\dropzone\dropzone.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\date.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\file.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\jquery.form-validator.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\ca.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\cz.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\de.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\dk.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\es.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\fr.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\it.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\nl.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\no.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\pl.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\pt.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\ro.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\ru.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\lang\sv.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\form-validator\location.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\fullcalendar\fullcalendar.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\highlight\jquery.highlight-4.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\highlight\jquery.highlight.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\isotope\isotope.pkgd.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\jquery\jquery-ui.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\jquery\jquery.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\jvectormap\jquery-jvectormap-data-us-lcc-en.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\jvectormap\jquery-jvectormap-map.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\jvectormap\jquery-jvectormap-us-aea-en.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\jvectormap\jquery-jvectormap-us-lcc-en.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\jvectormap\jquery-jvectormap-us-merc-en.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\jvectormap\jquery-jvectormap-us-mill-en.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\jvectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\jvectormap\jquery-jvectormap.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\knob\jquery.knob.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\lesscss\less.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\maskedinput\jquery.maskedinput.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\moment\moment.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\morris\morris.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\morris\raphael.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\nestable\jquery.nestable.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\noty\jquery.noty.packaged.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\pnotify\pnotify.custom.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\pnotify\pnotify.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\resizable\jquery-resizable.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\rickshaw\d3.v3.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\rickshaw\rickshaw.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\ar.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\az.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\bg.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\ca.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\cs.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\da.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\de.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\el.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\en.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\es.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\et.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\eu.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\fa.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\fi.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\fr.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\gl.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\he.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\hi.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\hr.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\hu.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\id.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\is.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\it.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\ja.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\km.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\ko.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\lt.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\lv.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\mk.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\ms.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\nb.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\nl.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\pl.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\pt-BR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\pt.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\ro.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\ru.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\sk.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\sr-Cyrl.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\sr.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\sv.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\th.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\tr.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\uk.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\vi.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\zh-CN.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\i18n\zh-TW.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\select2\select2.full.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\smartwizard\jquery.smartWizard.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\smartwizard\smartwizard\jquery.smartWizard.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\sparkline\jquery.sparkline.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-ar-AR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-bg-BG.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-ca-ES.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-cs-CZ.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-da-DK.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-de-DE.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-es-ES.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-es-EU.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-fa-IR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-fi-FI.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-fr-FR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-he-IL.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-hu-HU.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-id-ID.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-it-IT.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-ja-JP.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-ko-KR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-lt-LT.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-nb-NO.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-nl-NL.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-pl-PL.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-pt-BR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-pt-PT.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-ro-RO.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-ru-RU.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-sk-SK.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-sl-SI.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-sr-RS-Latin.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-sr-RS.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-sv-SE.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-th-TH.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-tr-TR.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-uk-UA.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-vi-VN.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-zh-CN.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\lang\summernote-zh-TW.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\summernote\summernote.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\sweetalert\sweetalert.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shAutoloader.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushAppleScript.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushAS3.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushBash.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushColdFusion.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushCpp.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushCSharp.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushCss.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushDelphi.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushDiff.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushErlang.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushGroovy.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushJava.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushJavaFX.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushJScript.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushPerl.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushPhp.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushPlain.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushPowerShell.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushPython.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushRuby.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushSass.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushScala.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushSql.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushVb.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shBrushXml.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shCore.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\scripts\shLegacy.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shAutoloader.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushAppleScript.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushAS3.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushBash.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushColdFusion.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushCpp.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushCSharp.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushCss.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushDelphi.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushDiff.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushErlang.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushGroovy.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushJava.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushJavaFX.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushJScript.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushPerl.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushPhp.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushPlain.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushPowerShell.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushPython.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushRuby.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushSass.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushScala.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushSql.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushVb.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shBrushXml.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shCore.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\syntaxhighlight\shLegacy.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tableexport\html2canvas.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tableexport\jquery.base64.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tableexport\jspdf\jspdf.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tableexport\jspdf\libs\base64.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tableexport\jspdf\libs\sprintf.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tableexport\tableExport.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\codesample\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\example\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\example_dependency\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\imagetools\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\layer\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\themes\modern\theme.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\tinymce\tinymce.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthDbConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Services\UserService.cs" />
+    <Compile Include="Areas\Admin\ViewModels\AdminMenuItem.cs" />
+    <Compile Include="Areas\Admin\ViewModels\LoginViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\UserViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Assets\css\fonts\BRoya.eot" />
+    <Content Include="Areas\Admin\Assets\css\fonts\BRoya.ttf" />
+    <Content Include="Areas\Admin\Assets\css\fonts\BRoya.woff" />
+    <Content Include="Areas\Admin\Assets\css\fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\Admin\Assets\css\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Areas\Admin\Assets\css\fonts\fontawesome-webfont.woff" />
+    <Content Include="Areas\Admin\Assets\css\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Areas\Admin\Assets\css\fonts\FontAwesome.otf" />
+    <Content Include="Areas\Admin\Assets\css\fonts\Linearicons-Free.eot" />
+    <Content Include="Areas\Admin\Assets\css\fonts\Linearicons-Free.ttf" />
+    <Content Include="Areas\Admin\Assets\css\fonts\Linearicons-Free.woff" />
+    <Content Include="Areas\Admin\Assets\css\fonts\Linearicons-Free.woff2" />
+    <Content Include="Areas\Admin\Assets\css\fonts\summernote.eot" />
+    <Content Include="Areas\Admin\Assets\css\fonts\summernote.ttf" />
+    <Content Include="Areas\Admin\Assets\css\fonts\summernote.woff" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\readme.md" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\tinymce-small.eot" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\tinymce-small.json" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\tinymce-small.ttf" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\tinymce-small.woff" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\tinymce.eot" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\tinymce.json" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\tinymce.ttf" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\fonts\tinymce.woff" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\skin.json" />
+    <Content Include="Areas\Admin\Assets\css\vendor\tinymce\Variables.less" />
+    <Content Include="Areas\Admin\Views\Shared\_MainLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\_UserLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\User\_userForm.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Delete.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -153,9 +546,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Assets\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>

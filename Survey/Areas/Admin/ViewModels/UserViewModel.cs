@@ -31,6 +31,7 @@ namespace Survey.Areas.Admin.ViewModels
 		public string ConfirmPassword { get; set; }
 
 		[Display(Name = "Role")]
+		[Required(ErrorMessage = "یک نقش را انتخاب کنید")]
 		public string SelectedRole { get; set; }
 
 		private readonly List<string> _roles = new List<string>();

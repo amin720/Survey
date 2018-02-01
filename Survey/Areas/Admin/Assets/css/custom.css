@@ -1,0 +1,79 @@
+@font-face {
+    font-family: 'BRoya';
+    src: url('fonts/BRoya.eot?#') format('eot'), /* IE6–8 */
+    url('fonts/BRoya.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('fonts/BRoya.ttf') format('truetype');
+    /* Saf3—5, Chrome4+, FF3.5, Opera 10+ */
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a,
+input,
+p,
+table,
+tr,
+td,
+th,
+button,
+div,
+.btn,
+ul,
+li,
+label,
+{
+    font-family: 'BRoya', sans-serif;
+    font-size: 20px;
+}
+
+.app .app-widget-tile .title,
+.app .app-widget-tile .subtitle {
+    font-size: 15px;
+}
+
+.form-horizontal .control-label {
+    text-align: right;
+}
+
+@media (min-width: 768px) {
+    .form-horizontal .control-label {
+        text-align: right;
+        margin-bottom: 0;
+        padding-top: 6px;
+    }
+}
+
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-10,
+.col-md-11,
+.col-md-12 {
+    float: right;
+}
+
+.app-navigation.app-navigation-style-default nav>ul>li a,
+.app-navigation.app-navigation-style-default nav>ul>li.title {
+    font-family: 'BRoya', sans-serif;
+    font-size: 15px;
+}
+
+.form-control,
+.control-label,
+.intval,
+.title {
+    font-family: 'BRoya', sans-serif;
+    font-size: 20px;
+}

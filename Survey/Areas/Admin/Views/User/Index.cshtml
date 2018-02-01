@@ -1,0 +1,79 @@
+﻿@using System.Web.Optimization
+@model IEnumerable<Survey.Core.Entities.UserIdentity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+@section MainPage
+{
+    @Scripts.Render("~/bundles/mainPage")
+}
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6">
+            <!-- PROFILE CARD -->
+            <div class="block block-condensed">
+                <div class="block-heading margin-bottom-0">
+
+                    <div class="app-heading app-heading-small pull-right">
+                        <div class="contact contact-rounded contact-bordered contact-lg margin-bottom-0">
+                            <img src="@Url.Content("~/Areas/Admin/Assets/img/user/no-image.png")">
+                            <div class="contact-container">
+                                <a href="#">@item.DisplayName</a>
+                                <span>#####</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="block-content row-table-holder">
+
+                    <div class="row row-table">
+                        <div class="col-md-4 col-xs-12">
+                            <span class="text-bolder text-uppercase text-sm">پست الکترونیکی:</span>
+                            <p>@item.Email</p>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <span class="text-bolder text-uppercase text-sm">تلفن:</span>
+                            <p>@item.PhoneNumber</p>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <span class="text-bolder text-uppercase text-sm">آدرس:</span>
+                            <p>Kyiv, Ukraine</p>
+                        </div>
+                    </div>
+
+                    <div class="row row-table">
+                        <div class="col-md-6 col-xs-12">
+                            <span class="text-bolder text-uppercase text-sm">تقش:</span>
+                            <p>
+                                $$$$$$$$$$$$$$
+                            </p>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <span class="text-bolder text-uppercase text-sm">Projects:</span>
+                            <p>Atlant - Responsive Admin Template<br>Boooya - Revolution Admin Template...
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row row-table">
+                        <div class="col-xs-12">
+                            <label class="switch pull-right margin-left-15" data-toggle="tooltip" data-original-title="فعال کردن کاربر">
+                                <input type="checkbox" name="user[]" value="1">
+                            </label>
+                            <a href="@Url.Action("Delete","User", new{username = @item.UserName})" class="btn btn-danger btn-icon-fixed pull-right"> حذف</a>
+                            <a href="@Url.Action("Edit","User", new{username = @item.UserName})" class="btn btn-info pull-left hidden-mobile" ><span class="icon-pencil"></span>ویرایش کاربر</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END PROFILE CARD -->
+        </div>
+    }
+</div>
+   

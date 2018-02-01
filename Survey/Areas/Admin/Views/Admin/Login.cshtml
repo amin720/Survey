@@ -1,0 +1,87 @@
+﻿@using System.Web.Optimization
+@model Survey.Areas.Admin.ViewModels.LoginViewModel
+    <!DOCTYPE html>
+    <html lang="fa">
+
+    <head>
+        <title>صفحه ورود به پنل ادمین</title>
+
+        <!-- META SECTION -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <!-- END META SECTION -->
+        <!-- CSS INCLUDE -->
+        @Styles.Render("~/bundles/baseStyles")
+        <!-- EOF CSS INCLUDE -->
+    </head>
+
+    <body>
+
+        <!-- APP WRAPPER -->
+        <div class="app app-fh">
+
+            <!-- START APP CONTAINER -->
+            <div class="app-container" style="background: url(@Url.Content("~/Areas/Admin/Assets/img/bg-1.jpg")) center center no-repeat fixed;">
+
+                <div class="app-login-box">
+                    <div class="app-login-box-user"><img src="@Url.Content("~/Areas/Admin/Assets/img/user/no-image.png")"></div>
+                    <div class="app-login-box-title">
+                        <div class="title">شروع یک دنیا بزرگ</div>
+                        <div class="subtitle">به حساب کاربری خود وارد شوید</div>
+                    </div>
+                    <div class="app-login-box-container">
+                        @using (Html.BeginForm("Login", "Admin", FormMethod.Post, new { @class = "" }))
+    {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="UserName" placeholder="نام کاربر">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="Password" placeholder="رمز عبور">
+                    </div>
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="app-checkbox">
+                                    <label><input type="checkbox" name="Remmeberme" value="0"> مرا بخاطر بسپار</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <button type="submit" class="btn btn-success btn-block">وارد شوید</button>
+                            </div>
+                        </div>
+
+                    </div>
+}
+                    </div>
+                    <div class="app-login-box-or">
+                        <div class="or">یا</div>
+                    </div>
+                    <!-- <div class="app-login-box-container">
+                        <button class="btn btn-facebook btn-block">Connect With Facebook</button>
+                        <button class="btn btn-twitter btn-block">Connect With Twitter</button>
+                    </div> -->
+                    <div class="app-login-box-footer">
+                        &copy; Eagle720 2018. All rights reserved.
+                    </div>
+                </div>
+
+            </div>
+            <!-- END APP CONTAINER -->
+
+        </div>
+        <!-- END APP WRAPPER -->
+        <!-- IMPORTANT SCRIPTS -->
+        @Scripts.Render("~/bundles/baseScripts")
+        <!-- END IMPORTANT SCRIPTS -->
+    </body>
+</html>

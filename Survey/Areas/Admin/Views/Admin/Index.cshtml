@@ -1,0 +1,131 @@
+﻿@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Index";
+    
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<!-- Start Head Monitoring -->
+<div class="row">
+    <div class="col-md-4">
+
+        <!-- START WIDGET -->
+        <div class="app-widget-tile">
+            <div class="line">
+                <div class="title"><span class="label label-success label-bordered">+14.2%</span></div>
+                <div class="title pull-right">تعداد شرکت کننده در نظر سنجی</div>
+            </div>
+            <div class="intval">9,427</div>
+            <div class="line">
+                <div class="subtitle text-success"><span class="icon-arrow-up"></span> good</div>
+                <div class="subtitle pull-right">Total items sold</div>
+            </div>
+        </div>
+        <!-- END WIDGET -->
+
+    </div>
+    <div class="col-md-4">
+
+
+        <!-- START WIDGET -->
+        <div class="app-widget-tile app-widget-highlight">
+            <div class="line">
+                <div class="title"><span class="label label-warning label-bordered">-3.5%</span></div>
+                <div class="title pull-right">بازدید از سایت</div>
+            </div>
+            <div class="intval">99,573</div>
+            <div class="line">
+                <div class="subtitle text-warning"><span class="icon-arrow-down"></span> normal</div>
+                <div class="subtitle pull-right">Visitors per month</div>
+            </div>
+        </div>
+        <!-- END WIDGET -->
+
+    </div>
+    <div class="col-md-4">
+
+        <!-- START WIDGET -->
+        <div class="app-widget-tile app-widget-highlight">
+            <div class="line">
+                <div class="title"><span class="label label-success label-bordered">3 NEW</span></div>
+                <div class="title pull-right">تعداد نظرات به طور کامل تکمیل شده</div>
+            </div>
+            <div class="intval text-right">39 / 1,589</div>
+            <div class="line">
+                <div class="subtitle pull-right"><a href="#">Open all messages</a></div>
+            </div>
+        </div>
+    </div>
+    <!-- END WIDGET -->
+
+</div>
+<!-- End Head Monitoring -->
+<!-- Start Chart Monitoring -->
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="block">
+            <div class="app-heading app-heading-small">
+                <div class="title">
+                    <h3>جنسیت</h3>
+                    <p>Very usefull donut chart by morris charts</p>
+                </div>
+            </div>
+
+            <div class="app-chart-holder" id="morris-donut-example" style="height: 300px;"></div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+
+        <div class="block">
+            <div class="app-heading app-heading-small">
+                <div class="title">
+                    <h3>سن</h3>
+                    <p>Very usefull donut chart by morris charts</p>
+                </div>
+            </div>
+
+            <div class="app-chart-holder" id="morris-donut-example" style="height: 300px;"></div>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="block">
+            <div class="app-heading app-heading-small">
+                <div class="title">
+                    <h3>میزان تحصیلات</h3>
+                    <p>Very usefull donut chart by morris charts</p>
+                </div>
+            </div>
+
+            <div class="app-chart-holder" id="morris-donut-example" style="height: 300px;"></div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+
+        <div class="block">
+            <div class="app-heading app-heading-small">
+                <div class="title">
+                    <h3>مدت ازدواج</h3>
+                    <p>Very usefull donut chart by morris charts</p>
+                </div>
+            </div>
+
+            <div class="app-chart-holder" id="morris-donut-example" style="height: 300px;"></div>
+        </div>
+
+    </div>
+</div>
+<!-- End Chart Monitoring -->
+
+
+@section MainPage
+{
+    @Scripts.Render("~/bundles/mainPage")
+}

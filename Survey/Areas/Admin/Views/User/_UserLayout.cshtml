@@ -1,0 +1,17 @@
+﻿@using System.Web.Optimization
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+@RenderBody()
+
+@section MainPage
+{
+    @Scripts.Render("~/bundles/mainPage")
+}
+
+@section UserPage
+{
+    @Scripts.Render("~/bundles/userPage")
+}
