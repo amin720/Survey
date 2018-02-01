@@ -487,10 +487,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SurveyController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Services\UserService.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminMenuItem.cs" />
     <Compile Include="Areas\Admin\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\SurveyViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\UserViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -536,6 +538,9 @@
     <Content Include="Areas\Admin\Views\User\Create.cshtml" />
     <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\User\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Survey\Survey.cshtml" />
+    <Content Include="Areas\Admin\Views\Survey\Section.cshtml" />
+    <Content Include="Areas\Admin\Views\Survey\QuestionAnswer.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -545,7 +550,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\images\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Assets\" />
     <Folder Include="Controllers\" />

@@ -1,0 +1,41 @@
+﻿@model Survey.Areas.Admin.ViewModels.SurveyViewModel
+@{
+    ViewBag.Title = "ایجاد بخش";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+    var counter = 1;
+}
+
+@using (Html.BeginForm("Section", "Survey", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <input type="hidden" name="SurveyTitle" value="@Model.SurveyTitle" />
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @*@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })*@
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="col-md-3 control-label">عنوان بخش</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="SectionTitle" placeholder="عنوان بخش" value="@Model.SectionTitle" required>
+                </div>
+            </div>
+            @*<div class="form-group">
+                    <label class="col-md-3 control-label">توضیحات</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" rows="5" name="SurveyDescription">@Model.SurveyDescription</textarea>
+                    </div>
+                </div>*@
+            <input type="submit" class="btn mce-btn-large btn-info" value="ثبت" />
+        </div>
+        <div class="col-md-4" style="border-right: 2px dashed darkgrey">
+            @foreach (var item in Model.Sectionses)
+            {
+                <a href="@Url.Action("Section","Survey",new{sectionName = item.GetEnumerator().Current.Name})">@counter. @item.GetEnumerator().Current.Name</a>
+                <br />
+                counter++;
+            }
+        </div>
+    </div>
+}
+
