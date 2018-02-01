@@ -25,15 +25,15 @@ namespace Survey.Core.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<Question> Questions { get; set; }
-        public virtual DbSet<Respondent> Respondents { get; set; }
-        public virtual DbSet<Section> Sections { get; set; }
-        public virtual DbSet<Survey> Surveys { get; set; }
-        public virtual DbSet<RSQA> RSQAs { get; set; }
+        public virtual DbSet<TBL_Answers> TBL_Answers { get; set; }
+        public virtual DbSet<TBL_Questions> TBL_Questions { get; set; }
+        public virtual DbSet<TBL_Sections> TBL_Sections { get; set; }
+        public virtual DbSet<TBL_Surveys> TBL_Surveys { get; set; }
+        public virtual DbSet<TBL_RSQA> TBL_RSQA { get; set; }
+        public virtual DbSet<TBL_Respondents> TBL_Respondents { get; set; }
     }
 }

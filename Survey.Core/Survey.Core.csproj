@@ -55,9 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Answer.cs">
-      <DependentUpon>Survey.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\AspNetRole.cs">
       <DependentUpon>Survey.tt</DependentUpon>
     </Compile>
@@ -68,18 +65,6 @@
       <DependentUpon>Survey.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\AspNetUserLogin.cs">
-      <DependentUpon>Survey.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Question.cs">
-      <DependentUpon>Survey.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Respondent.cs">
-      <DependentUpon>Survey.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\RSQA.cs">
-      <DependentUpon>Survey.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Section.cs">
       <DependentUpon>Survey.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Survey.Context.cs">
@@ -100,8 +85,32 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Survey.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\TBL_Answers.cs">
+      <DependentUpon>Survey.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TBL_Questions.cs">
+      <DependentUpon>Survey.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TBL_Respondents.cs">
+      <DependentUpon>Survey.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TBL_RSQA.cs">
+      <DependentUpon>Survey.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TBL_Sections.cs">
+      <DependentUpon>Survey.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TBL_Surveys.cs">
+      <DependentUpon>Survey.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\UserIdentity.cs" />
+    <Compile Include="Interfaces\IAnswerRepository.cs" />
+    <Compile Include="Interfaces\IQuestionRepository.cs" />
+    <Compile Include="Interfaces\IRespondentRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />
+    <Compile Include="Interfaces\IRSQARepository.cs" />
+    <Compile Include="Interfaces\ISectionRepository.cs" />
+    <Compile Include="Interfaces\ISurveyRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -12,22 +12,20 @@ namespace Survey.Core.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Respondent
+    public partial class TBL_Answers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Respondent()
+        public TBL_Answers()
         {
-            this.RSQAs = new HashSet<RSQA>();
+            this.TBL_RSQA = new HashSet<TBL_RSQA>();
         }
     
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Age { get; set; }
-        public int Gender { get; set; }
-        public string Degree { get; set; }
-        public string DurationMarried { get; set; }
+        public string Text { get; set; }
+        public int Question_Id { get; set; }
     
+        public virtual TBL_Questions TBL_Questions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RSQA> RSQAs { get; set; }
+        public virtual ICollection<TBL_RSQA> TBL_RSQA { get; set; }
     }
 }

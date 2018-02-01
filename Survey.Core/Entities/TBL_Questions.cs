@@ -12,23 +12,25 @@ namespace Survey.Core.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Section
+    public partial class TBL_Questions
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Section()
+        public TBL_Questions()
         {
-            this.Questions = new HashSet<Question>();
-            this.RSQAs = new HashSet<RSQA>();
+            this.TBL_Answers = new HashSet<TBL_Answers>();
+            this.TBL_RSQA = new HashSet<TBL_RSQA>();
         }
     
         public int Id { get; set; }
-        public int Survey_Id { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+        public int Section_Id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Question> Questions { get; set; }
+        public virtual ICollection<TBL_Answers> TBL_Answers { get; set; }
+        public virtual TBL_Sections TBL_Sections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RSQA> RSQAs { get; set; }
-        public virtual Survey Survey { get; set; }
+        public virtual ICollection<TBL_RSQA> TBL_RSQA { get; set; }
     }
 }

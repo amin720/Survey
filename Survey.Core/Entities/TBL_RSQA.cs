@@ -12,7 +12,7 @@ namespace Survey.Core.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class RSQA
+    public partial class TBL_RSQA
     {
         public int Survey_Id { get; set; }
         public int Section_Id { get; set; }
@@ -20,10 +20,10 @@ namespace Survey.Core.Entities
         public int Answer_Id { get; set; }
         public int Respondent_Id { get; set; }
     
-        public virtual Answer Answer { get; set; }
-        public virtual Question Question { get; set; }
-        public virtual Respondent Respondent { get; set; }
-        public virtual Section Section { get; set; }
-        public virtual Survey Survey { get; set; }
+        public virtual TBL_Answers TBL_Answers { get; set; }
+        public virtual TBL_Questions TBL_Questions { get; set; }
+        public virtual TBL_Sections TBL_Sections { get; set; }
+        public virtual TBL_Surveys TBL_Surveys { get; set; }
+        public virtual TBL_Respondents TBL_Respondents { get; set; }
     }
 }

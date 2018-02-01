@@ -4,15 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SurveyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Answer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Text" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="Question_Id" Type="int" Nullable="false" />
-        </EntityType>
+    <Schema Namespace="SurveyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -68,7 +60,15 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
-        <EntityType Name="Question">
+        <EntityType Name="TBL_Answers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Question_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_Questions">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -78,7 +78,7 @@
           <Property Name="ImageUrl" Type="nvarchar" MaxLength="400" />
           <Property Name="Section_Id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Respondent">
+        <EntityType Name="TBL_Respondents">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -88,10 +88,11 @@
           <Property Name="Gender" Type="int" Nullable="false" />
           <Property Name="Degree" Type="nvarchar" MaxLength="160" Nullable="false" />
           <Property Name="DurationMarried" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Major" Type="nvarchar" MaxLength="70" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'Survey.dbo.RSQA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="RSQA">
+warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TBL_RSQA">
           <Key>
             <PropertyRef Name="Survey_Id" />
             <PropertyRef Name="Section_Id" />
@@ -105,7 +106,7 @@ warning 6002: The table/view 'Survey.dbo.RSQA' does not have a primary key defin
           <Property Name="Answer_Id" Type="int" Nullable="false" />
           <Property Name="Respondent_Id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Section">
+        <EntityType Name="TBL_Sections">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -113,7 +114,7 @@ warning 6002: The table/view 'Survey.dbo.RSQA' does not have a primary key defin
           <Property Name="Survey_Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
-        <EntityType Name="Survey">
+        <EntityType Name="TBL_Surveys">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -123,13 +124,13 @@ warning 6002: The table/view 'Survey.dbo.RSQA' does not have a primary key defin
           <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <Association Name="FK_Answer_Question">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
-          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <End Role="TBL_Questions" Type="Self.TBL_Questions" Multiplicity="1" />
+          <End Role="TBL_Answers" Type="Self.TBL_Answers" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Question">
+            <Principal Role="TBL_Questions">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Answer">
+            <Dependent Role="TBL_Answers">
               <PropertyRef Name="Question_Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -191,124 +192,124 @@ warning 6002: The table/view 'Survey.dbo.RSQA' does not have a primary key defin
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Question_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <End Role="TBL_Sections" Type="Self.TBL_Sections" Multiplicity="1" />
+          <End Role="TBL_Questions" Type="Self.TBL_Questions" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Section">
+            <Principal Role="TBL_Sections">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Question">
+            <Dependent Role="TBL_Questions">
               <PropertyRef Name="Section_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RSQA_Answer">
-          <End Role="Answer" Type="Self.Answer" Multiplicity="1" />
-          <End Role="RSQA" Type="Self.RSQA" Multiplicity="*" />
+          <End Role="TBL_Answers" Type="Self.TBL_Answers" Multiplicity="1" />
+          <End Role="TBL_RSQA" Type="Self.TBL_RSQA" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Answer">
+            <Principal Role="TBL_Answers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RSQA">
+            <Dependent Role="TBL_RSQA">
               <PropertyRef Name="Answer_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RSQA_Question">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
-          <End Role="RSQA" Type="Self.RSQA" Multiplicity="*" />
+          <End Role="TBL_Questions" Type="Self.TBL_Questions" Multiplicity="1" />
+          <End Role="TBL_RSQA" Type="Self.TBL_RSQA" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Question">
+            <Principal Role="TBL_Questions">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RSQA">
+            <Dependent Role="TBL_RSQA">
               <PropertyRef Name="Question_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RSQA_Respondent">
-          <End Role="Respondent" Type="Self.Respondent" Multiplicity="1" />
-          <End Role="RSQA" Type="Self.RSQA" Multiplicity="*" />
+          <End Role="TBL_Respondents" Type="Self.TBL_Respondents" Multiplicity="1" />
+          <End Role="TBL_RSQA" Type="Self.TBL_RSQA" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Respondent">
+            <Principal Role="TBL_Respondents">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RSQA">
+            <Dependent Role="TBL_RSQA">
               <PropertyRef Name="Respondent_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RSQA_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="RSQA" Type="Self.RSQA" Multiplicity="*" />
+          <End Role="TBL_Sections" Type="Self.TBL_Sections" Multiplicity="1" />
+          <End Role="TBL_RSQA" Type="Self.TBL_RSQA" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Section">
+            <Principal Role="TBL_Sections">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RSQA">
+            <Dependent Role="TBL_RSQA">
               <PropertyRef Name="Section_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RSQA_Survey">
-          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
-          <End Role="RSQA" Type="Self.RSQA" Multiplicity="*" />
+          <End Role="TBL_Surveys" Type="Self.TBL_Surveys" Multiplicity="1" />
+          <End Role="TBL_RSQA" Type="Self.TBL_RSQA" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Survey">
+            <Principal Role="TBL_Surveys">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RSQA">
+            <Dependent Role="TBL_RSQA">
               <PropertyRef Name="Survey_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Section_Survey">
-          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
-          <End Role="Section" Type="Self.Section" Multiplicity="*" />
+          <End Role="TBL_Surveys" Type="Self.TBL_Surveys" Multiplicity="1" />
+          <End Role="TBL_Sections" Type="Self.TBL_Sections" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Survey">
+            <Principal Role="TBL_Surveys">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Section">
+            <Dependent Role="TBL_Sections">
               <PropertyRef Name="Survey_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Survey_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
+          <End Role="TBL_Surveys" Type="Self.TBL_Surveys" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Survey">
+            <Dependent Role="TBL_Surveys">
               <PropertyRef Name="User_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SurveyModelStoreContainer">
-          <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Respondent" EntityType="Self.Respondent" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Survey" EntityType="Self.Survey" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RSQA" EntityType="Self.RSQA" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="TBL_Answers" EntityType="Self.TBL_Answers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_Questions" EntityType="Self.TBL_Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_Respondents" EntityType="Self.TBL_Respondents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_Sections" EntityType="Self.TBL_Sections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_Surveys" EntityType="Self.TBL_Surveys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_RSQA" EntityType="Self.TBL_RSQA" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [RSQA].[Survey_Id] AS [Survey_Id], 
-    [RSQA].[Section_Id] AS [Section_Id], 
-    [RSQA].[Question_Id] AS [Question_Id], 
-    [RSQA].[Answer_Id] AS [Answer_Id], 
-    [RSQA].[Respondent_Id] AS [Respondent_Id]
-    FROM [dbo].[RSQA] AS [RSQA]</DefiningQuery>
+    [TBL_RSQA].[Survey_Id] AS [Survey_Id], 
+    [TBL_RSQA].[Section_Id] AS [Section_Id], 
+    [TBL_RSQA].[Question_Id] AS [Question_Id], 
+    [TBL_RSQA].[Answer_Id] AS [Answer_Id], 
+    [TBL_RSQA].[Respondent_Id] AS [Respondent_Id]
+    FROM [dbo].[TBL_RSQA] AS [TBL_RSQA]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Answer_Question" Association="Self.FK_Answer_Question">
-            <End Role="Question" EntitySet="Question" />
-            <End Role="Answer" EntitySet="Answer" />
+            <End Role="TBL_Questions" EntitySet="TBL_Questions" />
+            <End Role="TBL_Answers" EntitySet="TBL_Answers" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -327,70 +328,119 @@ warning 6002: The table/view 'Survey.dbo.RSQA' does not have a primary key defin
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_Question_Section" Association="Self.FK_Question_Section">
-            <End Role="Section" EntitySet="Section" />
-            <End Role="Question" EntitySet="Question" />
+            <End Role="TBL_Sections" EntitySet="TBL_Sections" />
+            <End Role="TBL_Questions" EntitySet="TBL_Questions" />
           </AssociationSet>
           <AssociationSet Name="FK_RSQA_Answer" Association="Self.FK_RSQA_Answer">
-            <End Role="Answer" EntitySet="Answer" />
-            <End Role="RSQA" EntitySet="RSQA" />
+            <End Role="TBL_Answers" EntitySet="TBL_Answers" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
           </AssociationSet>
           <AssociationSet Name="FK_RSQA_Question" Association="Self.FK_RSQA_Question">
-            <End Role="Question" EntitySet="Question" />
-            <End Role="RSQA" EntitySet="RSQA" />
+            <End Role="TBL_Questions" EntitySet="TBL_Questions" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
           </AssociationSet>
           <AssociationSet Name="FK_RSQA_Respondent" Association="Self.FK_RSQA_Respondent">
-            <End Role="Respondent" EntitySet="Respondent" />
-            <End Role="RSQA" EntitySet="RSQA" />
+            <End Role="TBL_Respondents" EntitySet="TBL_Respondents" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
           </AssociationSet>
           <AssociationSet Name="FK_RSQA_Section" Association="Self.FK_RSQA_Section">
-            <End Role="Section" EntitySet="Section" />
-            <End Role="RSQA" EntitySet="RSQA" />
+            <End Role="TBL_Sections" EntitySet="TBL_Sections" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
           </AssociationSet>
           <AssociationSet Name="FK_RSQA_Survey" Association="Self.FK_RSQA_Survey">
-            <End Role="Survey" EntitySet="Survey" />
-            <End Role="RSQA" EntitySet="RSQA" />
+            <End Role="TBL_Surveys" EntitySet="TBL_Surveys" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
           </AssociationSet>
           <AssociationSet Name="FK_Section_Survey" Association="Self.FK_Section_Survey">
-            <End Role="Survey" EntitySet="Survey" />
-            <End Role="Section" EntitySet="Section" />
+            <End Role="TBL_Surveys" EntitySet="TBL_Surveys" />
+            <End Role="TBL_Sections" EntitySet="TBL_Sections" />
           </AssociationSet>
           <AssociationSet Name="FK_Survey_AspNetUsers" Association="Self.FK_Survey_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Survey" EntitySet="Survey" />
+            <End Role="TBL_Surveys" EntitySet="TBL_Surveys" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SurveyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Answer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Question_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Question" Relationship="Self.FK_Answer_Question" FromRole="Answer" ToRole="Question" />
-          <NavigationProperty Name="RSQAs" Relationship="Self.FK_RSQA_Answer" FromRole="Answer" ToRole="RSQA" />
-        </EntityType>
+        <EntityContainer Name="SurveyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="SurveyModel.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="SurveyModel.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="SurveyModel.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="SurveyModel.AspNetUser" />
+          <EntitySet Name="TBL_Answers" EntityType="SurveyModel.TBL_Answers" />
+          <EntitySet Name="TBL_Questions" EntityType="SurveyModel.TBL_Questions" />
+          <EntitySet Name="TBL_Sections" EntityType="SurveyModel.TBL_Sections" />
+          <EntitySet Name="TBL_Surveys" EntityType="SurveyModel.TBL_Surveys" />
+          <EntitySet Name="TBL_RSQA" EntityType="SurveyModel.TBL_RSQA" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="SurveyModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="SurveyModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Survey_AspNetUsers" Association="SurveyModel.FK_Survey_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="TBL_Surveys" EntitySet="TBL_Surveys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answer_Question" Association="SurveyModel.FK_Answer_Question">
+            <End Role="TBL_Questions" EntitySet="TBL_Questions" />
+            <End Role="TBL_Answers" EntitySet="TBL_Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RSQA_Answer" Association="SurveyModel.FK_RSQA_Answer">
+            <End Role="TBL_Answers" EntitySet="TBL_Answers" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Section" Association="SurveyModel.FK_Question_Section">
+            <End Role="TBL_Sections" EntitySet="TBL_Sections" />
+            <End Role="TBL_Questions" EntitySet="TBL_Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RSQA_Question" Association="SurveyModel.FK_RSQA_Question">
+            <End Role="TBL_Questions" EntitySet="TBL_Questions" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RSQA_Section" Association="SurveyModel.FK_RSQA_Section">
+            <End Role="TBL_Sections" EntitySet="TBL_Sections" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Section_Survey" Association="SurveyModel.FK_Section_Survey">
+            <End Role="TBL_Surveys" EntitySet="TBL_Surveys" />
+            <End Role="TBL_Sections" EntitySet="TBL_Sections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RSQA_Survey" Association="SurveyModel.FK_RSQA_Survey">
+            <End Role="TBL_Surveys" EntitySet="TBL_Surveys" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="SurveyModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="TBL_Respondents" EntityType="SurveyModel.TBL_Respondents" />
+          <AssociationSet Name="FK_RSQA_Respondent" Association="SurveyModel.FK_RSQA_Respondent">
+            <End Role="TBL_Respondents" EntitySet="TBL_Respondents" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="SurveyModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser" Relationship="SurveyModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -398,16 +448,16 @@ warning 6002: The table/view 'Survey.dbo.RSQA' does not have a primary key defin
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="SurveyModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -422,61 +472,59 @@ warning 6002: The table/view 'Survey.dbo.RSQA' does not have a primary key defin
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="Surveys" Relationship="Self.FK_Survey_AspNetUsers" FromRole="AspNetUsers" ToRole="Survey" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="SurveyModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="SurveyModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="TBL_Surveys" Relationship="SurveyModel.FK_Survey_AspNetUsers" FromRole="AspNetUser" ToRole="TBL_Surveys" />
+          <NavigationProperty Name="AspNetRoles" Relationship="SurveyModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
-        <EntityType Name="Question">
+        <EntityType Name="TBL_Answers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Question_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBL_Questions" Relationship="SurveyModel.FK_Answer_Question" FromRole="TBL_Answers" ToRole="TBL_Questions" />
+          <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Answer" FromRole="TBL_Answers" ToRole="TBL_RSQA" />
+        </EntityType>
+        <EntityType Name="TBL_Questions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
           <Property Name="ImageUrl" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="Section_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Answers" Relationship="Self.FK_Answer_Question" FromRole="Question" ToRole="Answer" />
-          <NavigationProperty Name="Section" Relationship="Self.FK_Question_Section" FromRole="Question" ToRole="Section" />
-          <NavigationProperty Name="RSQAs" Relationship="Self.FK_RSQA_Question" FromRole="Question" ToRole="RSQA" />
+          <NavigationProperty Name="TBL_Answers" Relationship="SurveyModel.FK_Answer_Question" FromRole="TBL_Questions" ToRole="TBL_Answers" />
+          <NavigationProperty Name="TBL_Sections" Relationship="SurveyModel.FK_Question_Section" FromRole="TBL_Questions" ToRole="TBL_Sections" />
+          <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Question" FromRole="TBL_Questions" ToRole="TBL_RSQA" />
         </EntityType>
-        <EntityType Name="Respondent">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="190" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Age" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Gender" Type="Int32" Nullable="false" />
-          <Property Name="Degree" Type="String" MaxLength="160" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DurationMarried" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="RSQAs" Relationship="Self.FK_RSQA_Respondent" FromRole="Respondent" ToRole="RSQA" />
-        </EntityType>
-        <EntityType Name="Section">
+        <EntityType Name="TBL_Sections">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Survey_Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Questions" Relationship="Self.FK_Question_Section" FromRole="Section" ToRole="Question" />
-          <NavigationProperty Name="RSQAs" Relationship="Self.FK_RSQA_Section" FromRole="Section" ToRole="RSQA" />
-          <NavigationProperty Name="Survey" Relationship="Self.FK_Section_Survey" FromRole="Section" ToRole="Survey" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TBL_Questions" Relationship="SurveyModel.FK_Question_Section" FromRole="TBL_Sections" ToRole="TBL_Questions" />
+          <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Section" FromRole="TBL_Sections" ToRole="TBL_RSQA" />
+          <NavigationProperty Name="TBL_Surveys" Relationship="SurveyModel.FK_Section_Survey" FromRole="TBL_Sections" ToRole="TBL_Surveys" />
         </EntityType>
-        <EntityType Name="Survey">
+        <EntityType Name="TBL_Surveys">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
-          <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Survey_AspNetUsers" FromRole="Survey" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Sections" Relationship="Self.FK_Section_Survey" FromRole="Survey" ToRole="Section" />
-          <NavigationProperty Name="RSQAs" Relationship="Self.FK_RSQA_Survey" FromRole="Survey" ToRole="RSQA" />
+          <Property Name="User_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="SurveyModel.FK_Survey_AspNetUsers" FromRole="TBL_Surveys" ToRole="AspNetUser" />
+          <NavigationProperty Name="TBL_Sections" Relationship="SurveyModel.FK_Section_Survey" FromRole="TBL_Surveys" ToRole="TBL_Sections" />
+          <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Survey" FromRole="TBL_Surveys" ToRole="TBL_RSQA" />
         </EntityType>
-        <EntityType Name="RSQA">
+        <EntityType Name="TBL_RSQA">
           <Key>
             <PropertyRef Name="Survey_Id" />
             <PropertyRef Name="Section_Id" />
@@ -489,337 +537,291 @@ warning 6002: The table/view 'Survey.dbo.RSQA' does not have a primary key defin
           <Property Name="Question_Id" Type="Int32" Nullable="false" />
           <Property Name="Answer_Id" Type="Int32" Nullable="false" />
           <Property Name="Respondent_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Answer" Relationship="Self.FK_RSQA_Answer" FromRole="RSQA" ToRole="Answer" />
-          <NavigationProperty Name="Question" Relationship="Self.FK_RSQA_Question" FromRole="RSQA" ToRole="Question" />
-          <NavigationProperty Name="Respondent" Relationship="Self.FK_RSQA_Respondent" FromRole="RSQA" ToRole="Respondent" />
-          <NavigationProperty Name="Section" Relationship="Self.FK_RSQA_Section" FromRole="RSQA" ToRole="Section" />
-          <NavigationProperty Name="Survey" Relationship="Self.FK_RSQA_Survey" FromRole="RSQA" ToRole="Survey" />
+          <NavigationProperty Name="TBL_Answers" Relationship="SurveyModel.FK_RSQA_Answer" FromRole="TBL_RSQA" ToRole="TBL_Answers" />
+          <NavigationProperty Name="TBL_Questions" Relationship="SurveyModel.FK_RSQA_Question" FromRole="TBL_RSQA" ToRole="TBL_Questions" />
+          <NavigationProperty Name="TBL_Sections" Relationship="SurveyModel.FK_RSQA_Section" FromRole="TBL_RSQA" ToRole="TBL_Sections" />
+          <NavigationProperty Name="TBL_Surveys" Relationship="SurveyModel.FK_RSQA_Survey" FromRole="TBL_RSQA" ToRole="TBL_Surveys" />
+          <NavigationProperty Name="TBL_Respondents" Relationship="SurveyModel.FK_RSQA_Respondent" FromRole="TBL_RSQA" ToRole="TBL_Respondents" />
         </EntityType>
-        <Association Name="FK_Answer_Question">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
-          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Question">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Answer">
-              <PropertyRef Name="Question_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RSQA_Answer">
-          <End Role="Answer" Type="Self.Answer" Multiplicity="1" />
-          <End Role="RSQA" Type="Self.RSQA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Answer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RSQA">
-              <PropertyRef Name="Answer_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+          <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <End Type="SurveyModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
+            <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUserClaims">
+            <Dependent Role="AspNetUserClaim">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+          <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <End Type="SurveyModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
+            <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUserLogins">
+            <Dependent Role="AspNetUserLogin">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Survey_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
+          <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_Surveys" Role="TBL_Surveys" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
+            <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Survey">
+            <Dependent Role="TBL_Surveys">
               <PropertyRef Name="User_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Question_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+        <Association Name="FK_Answer_Question">
+          <End Type="SurveyModel.TBL_Questions" Role="TBL_Questions" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_Answers" Role="TBL_Answers" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Section">
+            <Principal Role="TBL_Questions">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Question">
+            <Dependent Role="TBL_Answers">
+              <PropertyRef Name="Question_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RSQA_Answer">
+          <End Type="SurveyModel.TBL_Answers" Role="TBL_Answers" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_RSQA" Role="TBL_RSQA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_Answers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBL_RSQA">
+              <PropertyRef Name="Answer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Section">
+          <End Type="SurveyModel.TBL_Sections" Role="TBL_Sections" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_Questions" Role="TBL_Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_Sections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBL_Questions">
               <PropertyRef Name="Section_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RSQA_Question">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
-          <End Role="RSQA" Type="Self.RSQA" Multiplicity="*" />
+          <End Type="SurveyModel.TBL_Questions" Role="TBL_Questions" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_RSQA" Role="TBL_RSQA" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Question">
+            <Principal Role="TBL_Questions">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RSQA">
+            <Dependent Role="TBL_RSQA">
               <PropertyRef Name="Question_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RSQA_Respondent">
-          <End Role="Respondent" Type="Self.Respondent" Multiplicity="1" />
-          <End Role="RSQA" Type="Self.RSQA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Respondent">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RSQA">
-              <PropertyRef Name="Respondent_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RSQA_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="RSQA" Type="Self.RSQA" Multiplicity="*" />
+          <End Type="SurveyModel.TBL_Sections" Role="TBL_Sections" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_RSQA" Role="TBL_RSQA" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Section">
+            <Principal Role="TBL_Sections">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RSQA">
+            <Dependent Role="TBL_RSQA">
               <PropertyRef Name="Section_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Section_Survey">
-          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
-          <End Role="Section" Type="Self.Section" Multiplicity="*" />
+          <End Type="SurveyModel.TBL_Surveys" Role="TBL_Surveys" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_Sections" Role="TBL_Sections" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Survey">
+            <Principal Role="TBL_Surveys">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Section">
+            <Dependent Role="TBL_Sections">
               <PropertyRef Name="Survey_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RSQA_Survey">
-          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
-          <End Role="RSQA" Type="Self.RSQA" Multiplicity="*" />
+          <End Type="SurveyModel.TBL_Surveys" Role="TBL_Surveys" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_RSQA" Role="TBL_RSQA" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Survey">
+            <Principal Role="TBL_Surveys">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RSQA">
+            <Dependent Role="TBL_RSQA">
               <PropertyRef Name="Survey_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+          <End Type="SurveyModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="SurveyEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Answers" EntityType="Self.Answer" />
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="Questions" EntityType="Self.Question" />
-          <EntitySet Name="Respondents" EntityType="Self.Respondent" />
-          <EntitySet Name="Sections" EntityType="Self.Section" />
-          <EntitySet Name="Surveys" EntityType="Self.Survey" />
-          <EntitySet Name="RSQAs" EntityType="Self.RSQA" />
-          <AssociationSet Name="FK_Answer_Question" Association="Self.FK_Answer_Question">
-            <End Role="Question" EntitySet="Questions" />
-            <End Role="Answer" EntitySet="Answers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RSQA_Answer" Association="Self.FK_RSQA_Answer">
-            <End Role="Answer" EntitySet="Answers" />
-            <End Role="RSQA" EntitySet="RSQAs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Survey_AspNetUsers" Association="Self.FK_Survey_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Survey" EntitySet="Surveys" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Question_Section" Association="Self.FK_Question_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="Question" EntitySet="Questions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RSQA_Question" Association="Self.FK_RSQA_Question">
-            <End Role="Question" EntitySet="Questions" />
-            <End Role="RSQA" EntitySet="RSQAs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RSQA_Respondent" Association="Self.FK_RSQA_Respondent">
-            <End Role="Respondent" EntitySet="Respondents" />
-            <End Role="RSQA" EntitySet="RSQAs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RSQA_Section" Association="Self.FK_RSQA_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="RSQA" EntitySet="RSQAs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Section_Survey" Association="Self.FK_Section_Survey">
-            <End Role="Survey" EntitySet="Surveys" />
-            <End Role="Section" EntitySet="Sections" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RSQA_Survey" Association="Self.FK_RSQA_Survey">
-            <End Role="Survey" EntitySet="Surveys" />
-            <End Role="RSQA" EntitySet="RSQAs" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        <EntityType Name="TBL_Respondents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="190" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int32" Nullable="false" />
+          <Property Name="Degree" Type="String" Nullable="false" MaxLength="160" FixedLength="false" Unicode="true" />
+          <Property Name="DurationMarried" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Major" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Respondent" FromRole="TBL_Respondents" ToRole="TBL_RSQA" />
+        </EntityType>
+        <Association Name="FK_RSQA_Respondent">
+          <End Type="SurveyModel.TBL_Respondents" Role="TBL_Respondents" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_RSQA" Role="TBL_RSQA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_Respondents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBL_RSQA">
+              <PropertyRef Name="Respondent_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SurveyModelStoreContainer" CdmEntityContainer="SurveyEntities">
-          <EntitySetMapping Name="Answers">
-            <EntityTypeMapping TypeName="SurveyModel.Answer">
-              <MappingFragment StoreEntitySet="Answer">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="Question_Id" ColumnName="Question_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="SurveyModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
             <EntityTypeMapping TypeName="SurveyModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
                 <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
             <EntityTypeMapping TypeName="SurveyModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="SurveyModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Questions">
-            <EntityTypeMapping TypeName="SurveyModel.Question">
-              <MappingFragment StoreEntitySet="Question">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
-                <ScalarProperty Name="Section_Id" ColumnName="Section_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Respondents">
-            <EntityTypeMapping TypeName="SurveyModel.Respondent">
-              <MappingFragment StoreEntitySet="Respondent">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Degree" ColumnName="Degree" />
-                <ScalarProperty Name="DurationMarried" ColumnName="DurationMarried" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sections">
-            <EntityTypeMapping TypeName="SurveyModel.Section">
-              <MappingFragment StoreEntitySet="Section">
+                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Survey_Id" ColumnName="Survey_Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Surveys">
-            <EntityTypeMapping TypeName="SurveyModel.Survey">
-              <MappingFragment StoreEntitySet="Survey">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RSQAs">
-            <EntityTypeMapping TypeName="SurveyModel.RSQA">
-              <MappingFragment StoreEntitySet="RSQA">
-                <ScalarProperty Name="Survey_Id" ColumnName="Survey_Id" />
-                <ScalarProperty Name="Section_Id" ColumnName="Section_Id" />
+          <EntitySetMapping Name="TBL_Answers">
+            <EntityTypeMapping TypeName="SurveyModel.TBL_Answers">
+              <MappingFragment StoreEntitySet="TBL_Answers">
                 <ScalarProperty Name="Question_Id" ColumnName="Question_Id" />
-                <ScalarProperty Name="Answer_Id" ColumnName="Answer_Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_Questions">
+            <EntityTypeMapping TypeName="SurveyModel.TBL_Questions">
+              <MappingFragment StoreEntitySet="TBL_Questions">
+                <ScalarProperty Name="Section_Id" ColumnName="Section_Id" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_Sections">
+            <EntityTypeMapping TypeName="SurveyModel.TBL_Sections">
+              <MappingFragment StoreEntitySet="TBL_Sections">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Survey_Id" ColumnName="Survey_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_Surveys">
+            <EntityTypeMapping TypeName="SurveyModel.TBL_Surveys">
+              <MappingFragment StoreEntitySet="TBL_Surveys">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_RSQA">
+            <EntityTypeMapping TypeName="SurveyModel.TBL_RSQA">
+              <MappingFragment StoreEntitySet="TBL_RSQA">
                 <ScalarProperty Name="Respondent_Id" ColumnName="Respondent_Id" />
+                <ScalarProperty Name="Answer_Id" ColumnName="Answer_Id" />
+                <ScalarProperty Name="Question_Id" ColumnName="Question_Id" />
+                <ScalarProperty Name="Section_Id" ColumnName="Section_Id" />
+                <ScalarProperty Name="Survey_Id" ColumnName="Survey_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="SurveyModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
+            <EndProperty Name="AspNetUser">
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="TBL_Respondents">
+            <EntityTypeMapping TypeName="SurveyModel.TBL_Respondents">
+              <MappingFragment StoreEntitySet="TBL_Respondents">
+                <ScalarProperty Name="Major" ColumnName="Major" />
+                <ScalarProperty Name="DurationMarried" ColumnName="DurationMarried" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
