@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Survey.Web.App_Start;
 
 namespace Survey
 {
@@ -13,6 +14,9 @@ namespace Survey
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-        }
+	        FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
+	        AuthDbConfig.RegisterAdmin();
+		}
     }
 }
