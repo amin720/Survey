@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Survey.Core.Interfaces;
 
@@ -18,11 +19,21 @@ namespace Survey.Infrastructure.Repository
 			}
 		}
 
-		public async Task<List<IGrouping<TBL_Sections, TBL_Questions>>> GetAll()
+		public async Task<List<TBL_Questions>> GetAllBySectionName(string sectionName)
 		{
 			using (var db = new SurveyEntities())
 			{
-				return await db.TBL_Questions.GroupBy(q => q.TBL_Sections).ToListAsync();
+				var model = await db.TBL_Questions.Where(s => s.TBL_Sections.Name == sectionName).ToListAsync();
+
+				return model;
+			}
+		}
+
+		public IQueryable<TBL_Questions> Query(Expression<Func<TBL_Questions, bool>> predicate)
+		{
+			using (var db = new SurveyEntities())
+			{
+				return db.Set<TBL_Questions>().Where(predicate);
 			}
 		}
 

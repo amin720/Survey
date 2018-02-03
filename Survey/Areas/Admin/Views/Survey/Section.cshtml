@@ -31,7 +31,7 @@
         <div class="col-md-4" style="border-right: 2px dashed darkgrey">
             @foreach (var item in Model.Sectionses)
             {
-                <a href="@Url.Action("Section","Survey",new{sectionName = item.GetEnumerator().Current.Name})">@counter. @item.GetEnumerator().Current.Name</a>
+                <a href="@Url.Action("Section","Survey",new{surveyName= Model.SurveyTitle,sectionName = item.Name})">@counter. @item.Name</a>
                 <br />
                 counter++;
             }

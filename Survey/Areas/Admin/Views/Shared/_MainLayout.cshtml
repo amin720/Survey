@@ -15,6 +15,7 @@
     <!-- END META SECTION -->
     <!-- CSS INCLUDE -->
     @Styles.Render("~/bundles/baseStyles")
+    <link href="~/Areas/Admin/Assets/css/uploadImage.css" rel="stylesheet" />
     <!-- EOF CSS INCLUDE -->
 </head>
 
@@ -122,8 +123,9 @@
     <!-- END IMPORTANT SCRIPTS -->
     <!-- THIS PAGE SCRIPTS -->
     @RenderSection("MainPage", false)
-@RenderSection("UserPage", false)
-@*<script src="~/Areas/Admin/Assets/js/vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>*@
+    @RenderSection("UserPage", false)
+    @RenderSection("QuestionAnswer",false)
+    @*<script src="~/Areas/Admin/Assets/js/vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>*@
     <!-- END THIS PAGE SCRIPTS -->
     <!-- APP SCRIPTS -->
     @Scripts.Render("~/bundles/appScripts");

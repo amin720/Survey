@@ -18,8 +18,11 @@ namespace Survey.Areas.Admin.ViewModels
 		public string QuestionDescription { get; set; }
 		public string QuestionImageUrl { get; set; }
 
+		public string Option { get; set; }	
+
 		public IEnumerable<TBL_Surveys> Surveyses { get; set; }
-		public List<IGrouping<TBL_Surveys, TBL_Sections>> Sectionses { get; set; }
-		public List<IGrouping<TBL_Sections, TBL_Questions>> Questions { get; set; }
+		public List<TBL_Sections> Sectionses { get; set; }
+		public List<TBL_Questions> Questions { get; set; }
+		public List<TBL_Answers> Answerses { get; set; }
 	}
 }

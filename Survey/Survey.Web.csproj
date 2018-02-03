@@ -139,6 +139,7 @@
     <Content Include="Areas\Admin\Assets\css\fonts\fontawesome-webfont.svg" />
     <Content Include="Areas\Admin\Assets\css\fonts\Linearicons-Free.svg" />
     <Content Include="Areas\Admin\Assets\css\styles.css" />
+    <Content Include="Areas\Admin\Assets\css\uploadImage.css" />
     <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content-style.css" />
     <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content.inline.min.css" />
     <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content.min.css" />
@@ -181,6 +182,7 @@
     <Content Include="Areas\Admin\Assets\js\app_demo_dashboard.js" />
     <Content Include="Areas\Admin\Assets\js\app_faq.js" />
     <Content Include="Areas\Admin\Assets\js\app_plugins.js" />
+    <Content Include="Areas\Admin\Assets\js\uploadImage.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-daterange\daterangepicker.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-datetimepicker\bootstrap-datetimepicker.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\bootstrap-select.js" />

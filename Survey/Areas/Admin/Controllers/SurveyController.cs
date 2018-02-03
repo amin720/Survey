@@ -59,7 +59,16 @@ namespace Survey.Areas.Admin.Controllers
 		public async Task<ActionResult> Survey(string surveyName)
 		{
 			var survey = await _surveyRepository.Get(surveyName);
-			var model = new SurveyViewModel { Surveyses = await _surveyRepository.GetAll(), SurveyTitle = survey.Name,SurveyDescription = survey.Description};
+			var model = new SurveyViewModel();
+			if (survey != null)
+			{
+				model = new SurveyViewModel { Surveyses = await _surveyRepository.GetAll(), SurveyTitle = survey.Name, SurveyDescription = survey.Description };
+			}
+			else
+			{
+				model.Surveyses = await _surveyRepository.GetAll();
+			}
+
 			var user = await GetloggedInUser();
 			ViewBag.Username = user.UserName;
 			ViewBag.DisplayName = user.DisplayName;
@@ -71,7 +80,7 @@ namespace Survey.Areas.Admin.Controllers
 		[Authorize(Roles = "admin,user")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Survey(SurveyViewModel surveys, string surveyName)
+		public async Task<ActionResult> Survey(SurveyViewModel surveys)
 		{
 			var model = new SurveyViewModel { Surveyses = await _surveyRepository.GetAll() };
 			var user = await GetloggedInUser();
@@ -85,14 +94,9 @@ namespace Survey.Areas.Admin.Controllers
 				{
 					ModelState.AddModelError(string.Empty, "لطفا مقدار های مناسب پر کنید");
 				}
-				if (string.IsNullOrEmpty(surveyName))
-				{
-					survey = await _surveyRepository.Get(surveys.SurveyTitle);
-				}
-				else
-				{
-					survey = await _surveyRepository.Get(surveyName);
-				}
+
+				survey = await _surveyRepository.Get(surveys.SurveyTitle);
+
 
 				if (survey == null)
 				{
@@ -122,9 +126,20 @@ namespace Survey.Areas.Admin.Controllers
 		// GET: Admin/Section/Create
 		[Route("Section")]
 		[Authorize(Roles = "admin,user")]
-		public async Task<ActionResult> Section(string surveyName)
+		public async Task<ActionResult> Section(string surveyName, string sectionName)
 		{
-			var model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAll(), SurveyTitle = surveyName };
+			var model = new SurveyViewModel();
+			if (!string.IsNullOrEmpty(surveyName) && string.IsNullOrEmpty(sectionName))
+			{
+				model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAllBySurveyName(surveyName), SurveyTitle = surveyName };
+			}
+			else if (!string.IsNullOrEmpty(sectionName))
+			{
+				var survey = await _surveyRepository.Get(surveyName);
+				var section = await _sectionRepository.Get(sectionName, survey.Id);
+				model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAllBySurveyName(surveyName), SurveyTitle = surveyName, SectionTitle = section.Name };
+			}
+
 			var user = await GetloggedInUser();
 			ViewBag.Username = user.UserName;
 			ViewBag.DisplayName = user.DisplayName;
@@ -136,9 +151,9 @@ namespace Survey.Areas.Admin.Controllers
 		[Authorize(Roles = "admin,user")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Section(SurveyViewModel sections, string sectionName)
+		public async Task<ActionResult> Section(SurveyViewModel sections)
 		{
-			var model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAll() };
+			var model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAllBySurveyName(sections.SurveyTitle) };
 			var user = await GetloggedInUser();
 			var survey = await _surveyRepository.Get(sections.SurveyTitle);
 			var section = new TBL_Sections();
@@ -151,14 +166,8 @@ namespace Survey.Areas.Admin.Controllers
 				{
 					ModelState.AddModelError(string.Empty, "لطفا مقدار های مناسب پر کنید");
 				}
-				if (string.IsNullOrEmpty(sectionName))
-				{
-					section = await _sectionRepository.Get(sections.SectionTitle, survey.Id);
-				}
-				else
-				{
-					section = await _sectionRepository.Get(sectionName, survey.Id);
-				}
+
+				section = await _sectionRepository.Get(sections.SectionTitle, survey.Id);
 
 				if (section == null)
 				{
@@ -171,7 +180,7 @@ namespace Survey.Areas.Admin.Controllers
 				}
 				model.SurveyTitle = survey.Name;
 
-				return View(model: model);
+				return RedirectToAction("QuestionAnswer", new { surveyName = sections.SurveyTitle, sectionName = sections.SectionTitle });
 			}
 			catch (Exception e)
 			{
@@ -185,9 +194,36 @@ namespace Survey.Areas.Admin.Controllers
 		// GET: Admin/Section/Create
 		[Route("QuestionAnswer")]
 		[Authorize(Roles = "admin,user")]
-		public async Task<ActionResult> QuestionAnswer(string surveyName, string sectionName)
+		public async Task<ActionResult> QuestionAnswer(string surveyName, string sectionName, string questinoTitle)
 		{
-			var model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAll(), SurveyTitle = surveyName, SectionTitle = sectionName };
+			var model = new SurveyViewModel();
+			if (!string.IsNullOrEmpty(surveyName) && !string.IsNullOrEmpty(sectionName) && string.IsNullOrEmpty(questinoTitle))
+			{
+				model = new SurveyViewModel { Questions = await _questionRepository.GetAllBySectionName(sectionName), SurveyTitle = surveyName, SectionTitle = sectionName };
+			}
+			else if (!string.IsNullOrEmpty(questinoTitle))
+			{
+				var survey = new TBL_Surveys();
+				if (!string.IsNullOrEmpty(surveyName))
+				{
+					survey = await _surveyRepository.Get(surveyName);
+				}
+				
+				var section = await _sectionRepository.Get(sectionName, survey.Id);
+				var question = await _questionRepository.Get(questinoTitle, section.Id);
+
+				model = new SurveyViewModel
+				{
+					Questions = await _questionRepository.GetAllBySectionName(sectionName),
+					Answerses = await _answerRepository.GetAllByQuestionName(question.Title),
+					SurveyTitle = survey.Name,
+					SectionTitle = section.Name,
+					QuestionTitle = question.Title,
+					QuestionDescription = question.Description,
+					QuestionImageUrl = question.ImageUrl
+				};
+			}
+
 			var user = await GetloggedInUser();
 			ViewBag.Username = user.UserName;
 			ViewBag.DisplayName = user.DisplayName;
@@ -199,9 +235,9 @@ namespace Survey.Areas.Admin.Controllers
 		[Authorize(Roles = "admin,user")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> QuestionAnswer(SurveyViewModel questions, string questionName, HttpPostedFileBase fileUpload)
+		public async Task<ActionResult> QuestionAnswer(SurveyViewModel questions, HttpPostedFileBase filePicker)
 		{
-			var model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAll() };
+			var model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAllBySurveyName(questions.SurveyTitle) };
 			var user = await GetloggedInUser();
 			var survey = await _surveyRepository.Get(questions.SurveyTitle);
 			var section = await _sectionRepository.Get(questions.SectionTitle, survey.Id);
@@ -216,47 +252,91 @@ namespace Survey.Areas.Admin.Controllers
 				{
 					ModelState.AddModelError(string.Empty, "لطفا مقدار های مناسب پر کنید");
 				}
-				if (string.IsNullOrEmpty(questionName))
+
+				question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
+
+				var answers = questions.Option.Split('-');
+
+				var modelQuestion = new TBL_Questions
 				{
-					question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
-				}
-				else
-				{
-					question = await _questionRepository.Get(questionName, section.Id);
-				}
+					Title = questions.QuestionTitle,
+					Section_Id = section.Id,
+					Description = questions.QuestionDescription
+				};
 
 				if (question == null)
 				{
-					var modelQuestion = new TBL_Questions
+					if (filePicker != null)
 					{
-						Title = questions.QuestionTitle,
-						Section_Id = section.Id,
-						Description = questions.QuestionDescription
-					};
-					var allowedExtensions = new[] {
-						".Jpg", ".png", ".jpg", "jpeg"
-					};
+						var allowedExtensions = new[] {
+							".Jpg", ".png", ".jpg", "jpeg"
+						};
 
-					var fileName = Path.GetFileName(fileUpload.FileName);
-					var ext = Path.GetExtension(fileUpload.FileName); //getting the extension(ex-.jpg)
-					if (allowedExtensions.Contains(ext)) //check what type of extension
-					{
-						string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
-						string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
-						// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
-						var path = Path.Combine(Server.MapPath("~/App_Data/images"), myfile);
-						modelQuestion.ImageUrl = "~/App_Data/images" + myfile;
-						fileUpload.SaveAs(path);
-					}
-					else
-					{
-						ModelState.AddModelError(string.Empty, "Please choose only Image file");
+						var fileName = Path.GetFileName(filePicker.FileName);
+						var ext = Path.GetExtension(filePicker.FileName); //getting the extension(ex-.jpg)
+						if (allowedExtensions.Contains(ext)) //check what type of extension
+						{
+							string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
+							string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
+																					// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
+							var path = Path.Combine(Server.MapPath("~/App_Data/images"), myfile);
+							modelQuestion.ImageUrl = "~/App_Data/images" + myfile;
+							filePicker.SaveAs(path);
+						}
+						else
+						{
+							ModelState.AddModelError(string.Empty, "Please choose only Image file");
+						}
 					}
 
 					await _questionRepository.Create(modelQuestion);
 					//return RedirectToAction();
 				}
+				else
+				{
+					if (filePicker != null)
+					{
+						var allowedExtensions = new[] {
+							".Jpg", ".png", ".jpg", "jpeg"
+						};
+
+						var fileName = Path.GetFileName(filePicker.FileName);
+						var ext = Path.GetExtension(filePicker.FileName); //getting the extension(ex-.jpg)
+						if (allowedExtensions.Contains(ext)) //check what type of extension
+						{
+							string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
+							string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
+																					// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
+							var path = Path.Combine(Server.MapPath("~/App_Data/images"), myfile);
+							modelQuestion.ImageUrl = "~/App_Data/images" + myfile;
+							filePicker.SaveAs(path);
+						}
+						else
+						{
+							ModelState.AddModelError(string.Empty, "Please choose only Image file");
+						}
+					}
+
+					await _questionRepository.Edit(modelQuestion);
+				}
+
+				question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
+
+				foreach (var item in answers)
+				{
+					await _answerRepository.Create(new TBL_Answers
+					{
+						Text = item,
+						Question_Id = question.Id
+					});
+				}
 				model.SurveyTitle = survey.Name;
+				model.SectionTitle = section.Name;
+				model.QuestionTitle = question.Title;
+				model.QuestionDescription = question.Description;
+				model.QuestionImageUrl = question.ImageUrl;
+				model.Option = string.Join("-", answers);
+				model.Questions = await _questionRepository.GetAllBySectionName(section.Name);
 
 				return View(model: model);
 			}
@@ -268,6 +348,15 @@ namespace Survey.Areas.Admin.Controllers
 			}
 
 		}
+
+
+
+
+
+
+
+
+
 
 		#region Method
 
@@ -286,6 +375,20 @@ namespace Survey.Areas.Admin.Controllers
 		private async Task<UserIdentity> GetloggedInUser()
 		{
 			return await _userRepository.GetUserByNameAsync(User.Identity.Name);
+		}
+		private static string GetBetween(string strSource, string strStart, string strEnd)
+		{
+			int Start, End;
+			if (strSource.Contains(strStart) && strSource.Contains(strEnd))
+			{
+				Start = strSource.IndexOf(strStart, 0) + strStart.Length;
+				End = strSource.IndexOf(strEnd, Start);
+				return strSource.Substring(Start, End - Start);
+			}
+			else
+			{
+				return "";
+			}
 		}
 
 		#endregion

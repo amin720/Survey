@@ -5,7 +5,7 @@
     var counter = 1;
 }
 
-@using (Html.BeginForm("QuestionAnswer", "Survey", FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("QuestionAnswer", "Survey", FormMethod.Post, new { @class = "form-horizontal", autocomplete = "off" }))
 {
     <input type="hidden" name="SurveyTitle" value="@Model.SurveyTitle" />
     <input type="hidden" name="SectionTitle" value="@Model.SectionTitle" />
@@ -30,19 +30,91 @@
             <div class="form-group">
                 <label class="col-md-3 control-label">تصویر</label>
                 <div class="col-md-9">
-                    <input type="file" class="form-control" name="Question" placeholder="تصویر" required>
+                    <div class="preview"></div>
+
+                    <button id="triggerUpload" class="btn">انتخاب تصویر</button>
+                    <input type="file" id="filePicker" class="form-control" name="filePicker" placeholder="تصویر" />
+                    <div class="fileName"></div>
                 </div>
             </div>
+
+
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">پاسخ</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="Option" placeholder="عنوان یا سوال" value="@Model.Option" required>
+                    <span class="text-bloody-500">پاسخ های خود را با " - " جدا کنید</span>
+                </div>
+            </div>
+
             <input type="submit" class="btn mce-btn-large btn-info" value="ثبت" />
         </div>
         <div class="col-md-4" style="border-right: 2px dashed darkgrey">
             @foreach (var item in Model.Questions)
             {
-                <a href="@Url.Action("QuestionAnswer","Survey",new{questionName = item.GetEnumerator().Current.Title})">@counter. @item.GetEnumerator().Current.Title</a>
-                <br />
-                counter++;
+                <a href="@Url.Action("QuestionAnswer", "Survey", new { sectionName= item.Section_Id,questinoTitle = item.Title })">@counter. @item.Title</a>
+                <br />counter++;
             }
         </div>
     </div>
+}
+
+
+
+@section QuestionAnswer
+{
+    <script src="~/Areas/Admin/Assets/js/uploadImage.js"></script>
+    <script type="text/javascript">
+        var triggerUpload = document.getElementById('triggerUpload'),
+            upInput = document.getElementById('filePicker'),
+            preview = document.querySelector('.preview');
+
+        //force triggering the file upload here...
+        triggerUpload.onclick = function () {
+            upInput.click();
+        };
+
+
+        upInput.onchange = function (e) {
+
+            var uploaded = this.value,
+                ext = uploaded.substring(uploaded.lastIndexOf('.') + 1),
+                ext = ext.toLowerCase(),
+                fileName = uploaded.substring(uploaded.lastIndexOf("\\") + 1),
+                accepted = ["jpg", "png", "gif", "jpeg"];
+
+            /*
+              ::Add in blank img tag and spinner
+              ::Use FileReader to read the img data
+              ::Set the image source to the FileReader data
+            */
+            function showPreview() {
+                preview.innerHTML = "<div class='loadingLogo'></div>";
+                preview.innerHTML += '<img id="img-preview" />';
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var img = document.getElementById('img-preview');
+                    if (reader.result) {
+                        img.src = reader.result;
+                    } else {
+                        img.src = @Model.QuestionImageUrl;
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+                preview.removeChild(document.querySelector('.loadingLogo'));
+                document.querySelector('.fileName').innerHTML = fileName + "<b> Uploaded!</b>";
+            };
+
+            //only do if supported image file
+            if (new RegExp(accepted.join("|")).test(ext)) {
+                showPreview();
+            } else {
+                preview.innerHTML = "";
+                document.querySelector('.fileName').innerHTML = "Hey! Upload an image file, not a <b>." + ext + "</b> file!";
+            }
+
+        }
+    </script>
 }
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Survey.Infrastructure.Repository
@@ -18,11 +19,13 @@ namespace Survey.Infrastructure.Repository
 			}
 		}
 
-		public async Task<List<IGrouping<TBL_Questions, TBL_Answers>>> GetAll()
+		public async Task<List<TBL_Answers>> GetAllByQuestionName(string questionName)
 		{
 			using (var db = new SurveyEntities())
 			{
-				return await db.TBL_Answers.GroupBy(q => q.TBL_Questions).ToListAsync();
+				var model = await db.TBL_Answers.Where(s => s.TBL_Questions.Title== questionName).ToListAsync();
+
+				return model;
 			}
 		}
 
@@ -73,6 +76,14 @@ namespace Survey.Infrastructure.Repository
 
 				db.TBL_Answers.Remove(model);
 				await db.SaveChangesAsync();
+			}
+		}
+
+		public IQueryable<TBL_Answers> Query(Expression<Func<TBL_Answers, bool>> predicate)
+		{
+			using (var db = new SurveyEntities())
+			{
+				return db.Set<TBL_Answers>().Where(predicate);
 			}
 		}
 	}
