@@ -491,6 +491,8 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\SurveyController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Security\ReCaptcha.cs" />
+    <Compile Include="Areas\Admin\Security\RepaptchaResponse.cs" />
     <Compile Include="Areas\Admin\Services\UserService.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminMenuItem.cs" />
     <Compile Include="Areas\Admin\ViewModels\LoginViewModel.cs" />

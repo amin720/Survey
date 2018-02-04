@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Owin.Security;
+using Survey.Areas.Admin.Security;
 using Survey.Areas.Admin.ViewModels;
 using Survey.Core.Entities;
 using Survey.Core.Interfaces;
@@ -16,7 +17,7 @@ namespace Survey.Areas.Admin.Controllers
 	[RoutePrefix("")]
 	[Authorize]
 	public class AdminController : Controller
-    {
+	{
 		private readonly IUserRepository _userRepository;
 
 		public AdminController()
@@ -53,26 +54,33 @@ namespace Survey.Areas.Admin.Controllers
 		[Route("login")]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Login(LoginViewModel model)
+		public virtual async Task<ActionResult> Login(LoginViewModel model)
 		{
 			try
 			{
-				var user = await _userRepository.GetLoginUserAsync(model.UserName, model.Password);
-
-				if (user == null)
+				var response = Request["g-recaptcha-response"];
+				if (response != null && ReCaptcha.IsValid(response))
 				{
-					//ModelState.AddModelError(string.Empty, "The user with supplied credentials does not exist.");
-					ModelState.AddModelError(string.Empty, "کاربر با مدارک ارائه شده موجود نیست.");
+					//
+
+					var user = await _userRepository.GetLoginUserAsync(model.UserName, model.Password);
+
+					if (user == null)
+					{
+						//ModelState.AddModelError(string.Empty, "The user with supplied credentials does not exist.");
+						ModelState.AddModelError(string.Empty, "کاربر با مدارک ارائه شده موجود نیست.");
+					}
+
+					var authManager = HttpContext.GetOwinContext().Authentication;
+
+					var userIdentity = await _userRepository.CreateIdentityAsync(user);
+
+					authManager.SignIn(new AuthenticationProperties() { IsPersistent = model.Remmeberme }, userIdentity);
+
+
+					return RedirectToAction("Index", "Admin");
 				}
-
-				var authManager = HttpContext.GetOwinContext().Authentication;
-
-				var userIdentity = await _userRepository.CreateIdentityAsync(user);
-
-				authManager.SignIn(new AuthenticationProperties() { IsPersistent = model.Remmeberme }, userIdentity);
-
-
-				return RedirectToAction("Index", "Admin");
+				return View();
 			}
 			catch (Exception e)
 			{
@@ -190,10 +198,10 @@ namespace Survey.Areas.Admin.Controllers
 			base.Dispose(disposing);
 		}
 
-	    private async Task<UserIdentity> GetloggedInUser()
-	    {
-		    return await _userRepository.GetUserByNameAsync(User.Identity.Name);
-	    }
+		private async Task<UserIdentity> GetloggedInUser()
+		{
+			return await _userRepository.GetUserByNameAsync(User.Identity.Name);
+		}
 
 	}
 }

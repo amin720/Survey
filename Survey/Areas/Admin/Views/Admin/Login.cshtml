@@ -17,6 +17,7 @@
         <!-- CSS INCLUDE -->
         @Styles.Render("~/bundles/baseStyles")
         <!-- EOF CSS INCLUDE -->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
 
     <body>
@@ -55,17 +56,23 @@
                                     <label><input type="checkbox" name="Remmeberme" value="0"> مرا بخاطر بسپار</label>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-xs-6">
-                                <button type="submit" class="btn btn-success btn-block">وارد شوید</button>
-                            </div>
+
+
+
+
+                            @*<div class="col-md-6 col-xs-6">
+
+                            </div>*@
                         </div>
+                        <div class="g-recaptcha" data-sitekey="6LdxTUQUAAAAAGe2qpxhHl1zm2T_rAvvsZeEdpbp"></div>
+                        <button type="submit" class="btn btn-success btn-block">وارد شوید</button>
 
                     </div>
 }
                     </div>
-                    <div class="app-login-box-or">
+                    @*<div class="app-login-box-or">
                         <div class="or">یا</div>
-                    </div>
+                    </div>*@
                     <!-- <div class="app-login-box-container">
                         <button class="btn btn-facebook btn-block">Connect With Facebook</button>
                         <button class="btn btn-twitter btn-block">Connect With Twitter</button>
