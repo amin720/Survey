@@ -65,8 +65,7 @@ namespace Survey.Infrastructure.Repository
 
 				model.Title = questions.Title;
 				model.Description = questions.Description;
-				model.TBL_RSQA = questions.TBL_RSQA;
-				model.TBL_Sections = questions.TBL_Sections;
+				model.Section_Id = questions.Section_Id;
 				model.ImageUrl = questions.ImageUrl;
 
 				await db.SaveChangesAsync();

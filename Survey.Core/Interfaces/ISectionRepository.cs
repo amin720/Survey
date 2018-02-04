@@ -11,6 +11,7 @@ namespace Survey.Core.Interfaces
 	public interface ISectionRepository
 	{
 		Task<TBL_Sections> Get(string name, int surveyId);
+		Task<TBL_Sections> Get(int id, int surveyId);
 		Task<List<TBL_Sections>> GetAllBySurveyName(string surveyName);
 		Task Create(TBL_Sections sections);
 		Task Edit(TBL_Sections sections);

@@ -29,12 +29,12 @@ section {
     border-radius: 12px;
 }
 
-input[type=file] {
+/*input[type=file] {
     width: 0;
     height: 0;
     overflow: hidden;
     visibility: hidden;
-}
+}*/
 
 .fileName {
     padding-top: 10px;

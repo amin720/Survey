@@ -208,19 +208,29 @@ namespace Survey.Areas.Admin.Controllers
 				{
 					survey = await _surveyRepository.Get(surveyName);
 				}
-				
-				var section = await _sectionRepository.Get(sectionName, survey.Id);
+
+				var section = await _sectionRepository.Get(Convert.ToInt32(sectionName), survey.Id);
 				var question = await _questionRepository.Get(questinoTitle, section.Id);
+				var answerses = await _answerRepository.GetAllByQuestionName(question.Title);
+				var answers = new string[answerses.Count];
+
+				int i = 0;
+				foreach (var item in answerses)
+				{
+					answers[i] = item.Text;
+					i++;
+				}
 
 				model = new SurveyViewModel
 				{
-					Questions = await _questionRepository.GetAllBySectionName(sectionName),
-					Answerses = await _answerRepository.GetAllByQuestionName(question.Title),
+					Questions = await _questionRepository.GetAllBySectionName(section.Name),
+					Answerses = answerses,
 					SurveyTitle = survey.Name,
 					SectionTitle = section.Name,
 					QuestionTitle = question.Title,
 					QuestionDescription = question.Description,
-					QuestionImageUrl = question.ImageUrl
+					QuestionImageUrl = question.ImageUrl,
+					Option = string.Join("-", answers)
 				};
 			}
 
@@ -237,7 +247,7 @@ namespace Survey.Areas.Admin.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> QuestionAnswer(SurveyViewModel questions, HttpPostedFileBase filePicker)
 		{
-			var model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAllBySurveyName(questions.SurveyTitle) };
+			var model = new SurveyViewModel { Questions = await _questionRepository.GetAllBySectionName(questions.SectionTitle) };
 			var user = await GetloggedInUser();
 			var survey = await _surveyRepository.Get(questions.SurveyTitle);
 			var section = await _sectionRepository.Get(questions.SectionTitle, survey.Id);
@@ -279,8 +289,8 @@ namespace Survey.Areas.Admin.Controllers
 							string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
 							string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
 																					// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
-							var path = Path.Combine(Server.MapPath("~/App_Data/images"), myfile);
-							modelQuestion.ImageUrl = "~/App_Data/images" + myfile;
+							var path = Path.Combine(Server.MapPath("~/App_Data/images/"), myfile);
+							modelQuestion.ImageUrl = "~/App_Data/images/" + myfile;
 							filePicker.SaveAs(path);
 						}
 						else
@@ -290,7 +300,17 @@ namespace Survey.Areas.Admin.Controllers
 					}
 
 					await _questionRepository.Create(modelQuestion);
-					//return RedirectToAction();
+
+					question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
+
+					foreach (var item in answers)
+					{
+						await _answerRepository.Create(new TBL_Answers
+						{
+							Text = item,
+							Question_Id = question.Id
+						});
+					}
 				}
 				else
 				{
@@ -307,8 +327,8 @@ namespace Survey.Areas.Admin.Controllers
 							string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
 							string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
 																					// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
-							var path = Path.Combine(Server.MapPath("~/App_Data/images"), myfile);
-							modelQuestion.ImageUrl = "~/App_Data/images" + myfile;
+							var path = Path.Combine(Server.MapPath("~/App_Data/images/"), myfile);
+							modelQuestion.ImageUrl = "~/App_Data/images/" + myfile;
 							filePicker.SaveAs(path);
 						}
 						else
@@ -318,18 +338,21 @@ namespace Survey.Areas.Admin.Controllers
 					}
 
 					await _questionRepository.Edit(modelQuestion);
+
+					question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
+
+					foreach (var item in answers)
+					{
+						await _answerRepository.Edit(new TBL_Answers
+						{
+							Text = item,
+							Question_Id = question.Id
+						});
+					}
 				}
 
 				question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
 
-				foreach (var item in answers)
-				{
-					await _answerRepository.Create(new TBL_Answers
-					{
-						Text = item,
-						Question_Id = question.Id
-					});
-				}
 				model.SurveyTitle = survey.Name;
 				model.SectionTitle = section.Name;
 				model.QuestionTitle = question.Title;

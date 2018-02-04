@@ -558,6 +558,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Assets\" />
     <Folder Include="Controllers\" />
+    <Folder Include="Images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
