@@ -481,7 +481,9 @@
     <Content Include="Areas\Admin\Assets\js\vendor\tinymce\themes\modern\theme.min.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\tinymce\tinymce.min.js" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthDbConfig.cs" />
@@ -548,8 +550,8 @@
     <Content Include="Areas\Admin\Views\Survey\Section.cshtml" />
     <Content Include="Areas\Admin\Views\Survey\QuestionAnswer.cshtml" />
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -58,9 +58,9 @@ namespace Survey.Areas.Admin.Controllers
 		{
 			try
 			{
-				var response = Request["g-recaptcha-response"];
-				if (response != null && ReCaptcha.IsValid(response))
-				{
+				//var response = Request["g-recaptcha-response"];
+				//if (response != null && ReCaptcha.IsValid(response))
+				//{
 
 
 					var user = await _userRepository.GetLoginUserAsync(model.UserName, model.Password);
@@ -79,8 +79,8 @@ namespace Survey.Areas.Admin.Controllers
 
 
 					return RedirectToAction("Index", "Admin");
-				}
-				return View();
+				//}
+				//return View();
 			}
 			catch (Exception e)
 			{
