@@ -17,7 +17,7 @@ namespace Survey
 			app.UseCookieAuthentication(new CookieAuthenticationOptions()
 			{
 				AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-				LoginPath = new PathString("/admin/login"),
+				LoginPath = new PathString("/admin/admin/login"),
 			});
 
 		}

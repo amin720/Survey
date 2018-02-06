@@ -174,6 +174,7 @@ namespace Survey.Areas.Admin.Controllers
 					await _sectionRepository.Create(new TBL_Sections
 					{
 						Name = sections.SectionTitle,
+						Description = sections.SectionDescription,
 						Survey_Id = survey.Id
 					});
 					return RedirectToAction("QuestionAnswer", new { surveyName = survey.Name, sectionName = sections.SectionTitle });

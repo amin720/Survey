@@ -22,8 +22,8 @@ namespace Survey.Core.Entities
     
         public virtual TBL_Answers TBL_Answers { get; set; }
         public virtual TBL_Questions TBL_Questions { get; set; }
+        public virtual TBL_Respondents TBL_Respondents { get; set; }
         public virtual TBL_Sections TBL_Sections { get; set; }
         public virtual TBL_Surveys TBL_Surveys { get; set; }
-        public virtual TBL_Respondents TBL_Respondents { get; set; }
     }
 }

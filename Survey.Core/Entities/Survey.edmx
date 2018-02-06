@@ -113,6 +113,7 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Survey_Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="350" />
         </EntityType>
         <EntityType Name="TBL_Surveys">
           <Key>
@@ -371,6 +372,7 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
           <EntitySet Name="AspNetUsers" EntityType="SurveyModel.AspNetUser" />
           <EntitySet Name="TBL_Answers" EntityType="SurveyModel.TBL_Answers" />
           <EntitySet Name="TBL_Questions" EntityType="SurveyModel.TBL_Questions" />
+          <EntitySet Name="TBL_Respondents" EntityType="SurveyModel.TBL_Respondents" />
           <EntitySet Name="TBL_Sections" EntityType="SurveyModel.TBL_Sections" />
           <EntitySet Name="TBL_Surveys" EntityType="SurveyModel.TBL_Surveys" />
           <EntitySet Name="TBL_RSQA" EntityType="SurveyModel.TBL_RSQA" />
@@ -402,6 +404,10 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
             <End Role="TBL_Questions" EntitySet="TBL_Questions" />
             <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
           </AssociationSet>
+          <AssociationSet Name="FK_RSQA_Respondent" Association="SurveyModel.FK_RSQA_Respondent">
+            <End Role="TBL_Respondents" EntitySet="TBL_Respondents" />
+            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
+          </AssociationSet>
           <AssociationSet Name="FK_RSQA_Section" Association="SurveyModel.FK_RSQA_Section">
             <End Role="TBL_Sections" EntitySet="TBL_Sections" />
             <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
@@ -417,11 +423,6 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
           <AssociationSet Name="AspNetUserRoles" Association="SurveyModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <EntitySet Name="TBL_Respondents" EntityType="SurveyModel.TBL_Respondents" />
-          <AssociationSet Name="FK_RSQA_Respondent" Association="SurveyModel.FK_RSQA_Respondent">
-            <End Role="TBL_Respondents" EntitySet="TBL_Respondents" />
-            <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -501,6 +502,19 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
           <NavigationProperty Name="TBL_Sections" Relationship="SurveyModel.FK_Question_Section" FromRole="TBL_Questions" ToRole="TBL_Sections" />
           <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Question" FromRole="TBL_Questions" ToRole="TBL_RSQA" />
         </EntityType>
+        <EntityType Name="TBL_Respondents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="190" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int32" Nullable="false" />
+          <Property Name="Degree" Type="String" Nullable="false" MaxLength="160" FixedLength="false" Unicode="true" />
+          <Property Name="DurationMarried" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Major" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Respondent" FromRole="TBL_Respondents" ToRole="TBL_RSQA" />
+        </EntityType>
         <EntityType Name="TBL_Sections">
           <Key>
             <PropertyRef Name="Id" />
@@ -508,6 +522,7 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Survey_Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TBL_Questions" Relationship="SurveyModel.FK_Question_Section" FromRole="TBL_Sections" ToRole="TBL_Questions" />
           <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Section" FromRole="TBL_Sections" ToRole="TBL_RSQA" />
           <NavigationProperty Name="TBL_Surveys" Relationship="SurveyModel.FK_Section_Survey" FromRole="TBL_Sections" ToRole="TBL_Surveys" />
@@ -539,9 +554,9 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
           <Property Name="Respondent_Id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TBL_Answers" Relationship="SurveyModel.FK_RSQA_Answer" FromRole="TBL_RSQA" ToRole="TBL_Answers" />
           <NavigationProperty Name="TBL_Questions" Relationship="SurveyModel.FK_RSQA_Question" FromRole="TBL_RSQA" ToRole="TBL_Questions" />
+          <NavigationProperty Name="TBL_Respondents" Relationship="SurveyModel.FK_RSQA_Respondent" FromRole="TBL_RSQA" ToRole="TBL_Respondents" />
           <NavigationProperty Name="TBL_Sections" Relationship="SurveyModel.FK_RSQA_Section" FromRole="TBL_RSQA" ToRole="TBL_Sections" />
           <NavigationProperty Name="TBL_Surveys" Relationship="SurveyModel.FK_RSQA_Survey" FromRole="TBL_RSQA" ToRole="TBL_Surveys" />
-          <NavigationProperty Name="TBL_Respondents" Relationship="SurveyModel.FK_RSQA_Respondent" FromRole="TBL_RSQA" ToRole="TBL_Respondents" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -631,6 +646,18 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RSQA_Respondent">
+          <End Type="SurveyModel.TBL_Respondents" Role="TBL_Respondents" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_RSQA" Role="TBL_RSQA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_Respondents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBL_RSQA">
+              <PropertyRef Name="Respondent_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RSQA_Section">
           <End Type="SurveyModel.TBL_Sections" Role="TBL_Sections" Multiplicity="1" />
           <End Type="SurveyModel.TBL_RSQA" Role="TBL_RSQA" Multiplicity="*" />
@@ -670,31 +697,6 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
         <Association Name="AspNetUserRoles">
           <End Type="SurveyModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-        </Association>
-        <EntityType Name="TBL_Respondents">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="190" FixedLength="false" Unicode="true" />
-          <Property Name="Age" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="Int32" Nullable="false" />
-          <Property Name="Degree" Type="String" Nullable="false" MaxLength="160" FixedLength="false" Unicode="true" />
-          <Property Name="DurationMarried" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Major" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Respondent" FromRole="TBL_Respondents" ToRole="TBL_RSQA" />
-        </EntityType>
-        <Association Name="FK_RSQA_Respondent">
-          <End Type="SurveyModel.TBL_Respondents" Role="TBL_Respondents" Multiplicity="1" />
-          <End Type="SurveyModel.TBL_RSQA" Role="TBL_RSQA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TBL_Respondents">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TBL_RSQA">
-              <PropertyRef Name="Respondent_Id" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -771,9 +773,23 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TBL_Respondents">
+            <EntityTypeMapping TypeName="SurveyModel.TBL_Respondents">
+              <MappingFragment StoreEntitySet="TBL_Respondents">
+                <ScalarProperty Name="Major" ColumnName="Major" />
+                <ScalarProperty Name="DurationMarried" ColumnName="DurationMarried" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TBL_Sections">
             <EntityTypeMapping TypeName="SurveyModel.TBL_Sections">
               <MappingFragment StoreEntitySet="TBL_Sections">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Survey_Id" ColumnName="Survey_Id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -809,19 +825,6 @@ warning 6002: The table/view 'Survey.dbo.TBL_RSQA' does not have a primary key d
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="TBL_Respondents">
-            <EntityTypeMapping TypeName="SurveyModel.TBL_Respondents">
-              <MappingFragment StoreEntitySet="TBL_Respondents">
-                <ScalarProperty Name="Major" ColumnName="Major" />
-                <ScalarProperty Name="DurationMarried" ColumnName="DurationMarried" />
-                <ScalarProperty Name="Degree" ColumnName="Degree" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
