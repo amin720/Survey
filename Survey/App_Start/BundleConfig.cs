@@ -11,7 +11,7 @@ namespace Survey.Web.App_Start
 			bundles.Add(new ScriptBundle("~/bundles/baseScripts").Include(
 				"~/Areas/Admin/Assets/js/vendor/jquery/jquery.min.js",
 				"~/Areas/Admin/Assets/js/vendor/jquery/jquery-ui.min.js",
-				"~/Areas/Admin/Assets/js/vendor/bootstrap/bootstrap.min.js",
+				"~/Areas/Admin/Assets/js/vendor/bootstrap-rtl.min.js",
 				"~/Areas/Admin/Assets/js/vendor/moment/moment.min.js",
 				"~/Areas/Admin/Assets/js/vendor/customscrollbar/jquery.mCustomScrollbar.min.js"));
 
@@ -24,6 +24,7 @@ namespace Survey.Web.App_Start
 
 			bundles.Add(new StyleBundle("~/bundles/baseStyles").Include(
 				"~/Areas/Admin/Assets/css/styles.css",
+				"~/Areas/Admin/Assets/css/vendor/bootstrap-rtl.min.css",
 				"~/Areas/Admin/Assets/css/custom.css"));
 
 			#endregion

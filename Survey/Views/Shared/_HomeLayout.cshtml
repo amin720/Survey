@@ -1,0 +1,49 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <title>@ViewBag.Title</title>
+
+    <!-- META SECTION -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- END META SECTION -->
+    <!-- CSS INCLUDE -->
+    @Styles.Render("~/bundles/baseStyles")
+    <link href="~/Areas/Admin/Assets/css/uploadImage.css" rel="stylesheet" />
+    <!-- EOF CSS INCLUDE -->
+</head>
+
+<body class="survey-app">
+<div class="container">
+    <div class="survey">
+        <div class="survey-head">
+            <div class="row">
+               
+                <div class="col-sm-9">
+                    <h2 class="text-center">@ViewBag.PTitle</h2>
+                </div>
+                <div class="col-sm-3">
+                    <span class="pull-left label label-danger text-blue-600" dir="rtl" style="font-size: 1.8em"> @ViewBag.Current  از  @ViewBag.Total </span>
+                </div>
+            </div>
+            
+            <p>
+                @ViewBag.PDescription
+            </p>
+        </div>
+        <div class="survey-body">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+    @Scripts.Render("~/bundles/baseScripts")
+    <!-- END IMPORTANT SCRIPTS -->
+</body>
+
+</html>

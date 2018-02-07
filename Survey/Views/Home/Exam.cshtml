@@ -1,0 +1,60 @@
+﻿@using Survey.ViewModels
+@model Survey.ViewModels.ExamViewModel
+@{
+    ViewBag.Title = "Exam";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+
+    var List = new List<ExamViewModel>();
+    List = ViewBag.ListQA;
+
+    var count = 0;
+
+    int index = ViewBag.Index;
+    index++;
+}
+
+@using (Html.BeginForm("Exam", "Home", FormMethod.Post, new { @class = "form-horizontal text-black text-right" }))
+
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-bloody-200" })
+
+    foreach (var item in List)
+    {
+        <input type="hidden" name="[@count].Survey" value="@ViewBag.SurveyTitle" />
+        <input type="hidden" name="[@count].Index" value="@index" />
+        <input type="hidden" name="[@count].Email" value="@ViewBag.Email" />
+
+        var answers = item.Answer.Split('-');
+        <div class="form-group">
+            <h3 name="[@count].QuestionTitle">@item.QuestionTitle</h3>
+            <input type="hidden" name="[@count].QuestionTitle" value="@item.QuestionTitle" />
+            <p name="[@count].QuestionDescription">@item.QuestionDescription</p>
+            <input type="hidden" name="[@count].QuestionDescription" value="@item.QuestionDescription" />
+
+            @if (!string.IsNullOrEmpty(item.QuestionImgeUrl))
+            {
+                <img src="@Url.Content(item.QuestionImgeUrl)" class="img-responsive img-rounded pull-right" />
+                <input type="hidden" name="[@count].QuestionImgeUrl" value="@item.QuestionImgeUrl" />
+
+            }
+
+            <div class="col-sm-12">
+                <div class="pull-right">
+                    @foreach (string t in answers)
+                    {
+                        <div class="md-radio md-radio-inline">
+                            <input id="@item.QuestionTitle@t" type="radio" name="[@count].Answer" value="@t">
+                            <label for="@item.QuestionTitle@t">@t</label>
+                        </div>
+}
+                </div>
+            </div>
+        </div>
+        count++;
+    }
+
+    <input type="submit" class="btn btn-block btn-info" value="قسمت بعدی" />
+}
+
+

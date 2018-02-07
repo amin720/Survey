@@ -17,8 +17,8 @@ namespace Survey.Core.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TBL_Surveys()
         {
-            this.TBL_Sections = new HashSet<TBL_Sections>();
             this.TBL_RSQA = new HashSet<TBL_RSQA>();
+            this.TBL_Sections = new HashSet<TBL_Sections>();
         }
     
         public int Id { get; set; }
@@ -28,8 +28,8 @@ namespace Survey.Core.Entities
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TBL_Sections> TBL_Sections { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TBL_RSQA> TBL_RSQA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TBL_Sections> TBL_Sections { get; set; }
     }
 }

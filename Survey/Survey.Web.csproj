@@ -141,6 +141,7 @@
     <Content Include="Areas\Admin\Assets\css\fonts\Linearicons-Free.svg" />
     <Content Include="Areas\Admin\Assets\css\styles.css" />
     <Content Include="Areas\Admin\Assets\css\uploadImage.css" />
+    <Content Include="Areas\Admin\Assets\css\vendor\bootstrap-rtl.min.css" />
     <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content-style.css" />
     <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content.inline.min.css" />
     <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content.min.css" />
@@ -186,6 +187,7 @@
     <Content Include="Areas\Admin\Assets\js\uploadImage.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-daterange\daterangepicker.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-datetimepicker\bootstrap-datetimepicker.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-rtl.min.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\bootstrap-select.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-ar_AR.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-bg_BG.js" />
@@ -507,6 +509,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ExamViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -552,6 +555,8 @@
     <None Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\Shared\_HomeLayout.cshtml" />
+    <Content Include="Views\Home\Exam.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -560,7 +565,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\images\" />
+    <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Assets\" />
     <Folder Include="Images\" />
