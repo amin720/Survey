@@ -63,7 +63,7 @@ namespace Survey.Infrastructure.Repository
 				}
 
 				model.Name = sections.Name;
-				model.TBL_RSQA = sections.TBL_RSQA;
+				model.Description = sections.Description;
 				model.Survey_Id = sections.Survey_Id;
 
 				await db.SaveChangesAsync();

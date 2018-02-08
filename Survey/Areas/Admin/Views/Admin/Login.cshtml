@@ -31,11 +31,11 @@
                 <div class="app-login-box">
                     <div class="app-login-box-user"><img src="@Url.Content("~/Areas/Admin/Assets/img/user/no-image.png")"></div>
                     <div class="app-login-box-title">
-                        <div class="title">شروع یک دنیا بزرگ</div>
-                        <div class="subtitle">به حساب کاربری خود وارد شوید</div>
+                        <div class="title text-center">شروع یک دنیا بزرگ</div>
+                        <div class="subtitle text-center">به حساب کاربری خود وارد شوید</div>
                     </div>
-                    <div class="app-login-box-container">
-                        @using (Html.BeginForm("Login", "Admin", FormMethod.Post, new { @class = "" }))
+                    <div class="app-login-box-container text-center">
+                        @using (Html.BeginForm("Login", "Admin", FormMethod.Post, new { @class = "text-center" }))
     {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary("", new { @class = "text-danger" })
@@ -65,7 +65,7 @@
                             </div>*@
                         </div>
                         @*<div class="g-recaptcha" data-sitekey="6LdxTUQUAAAAAGe2qpxhHl1zm2T_rAvvsZeEdpbp"></div>*@
-                        <button type="submit" class="btn btn-success btn-block">وارد شوید</button>
+                        <button type="submit" class="btn btn-success btn-block" style="text-align: center;">وارد شوید</button>
 
                     </div>
 }

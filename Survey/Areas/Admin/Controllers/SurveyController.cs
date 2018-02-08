@@ -137,7 +137,7 @@ namespace Survey.Areas.Admin.Controllers
 			{
 				var survey = await _surveyRepository.Get(surveyName);
 				var section = await _sectionRepository.Get(sectionName, survey.Id);
-				model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAllBySurveyName(surveyName), SurveyTitle = surveyName, SectionTitle = section.Name };
+				model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAllBySurveyName(surveyName), SurveyTitle = surveyName, SectionTitle = section.Name,SectionDescription = section.Description};
 			}
 
 			var user = await GetloggedInUser();
@@ -178,6 +178,13 @@ namespace Survey.Areas.Admin.Controllers
 						Survey_Id = survey.Id
 					});
 					return RedirectToAction("QuestionAnswer", new { surveyName = survey.Name, sectionName = sections.SectionTitle });
+				}
+				else
+				{
+					section.Name = sections.SectionTitle;
+					section.Description = sections.SectionDescription;
+
+					await _sectionRepository.Edit(section);
 				}
 				model.SurveyTitle = survey.Name;
 
@@ -290,8 +297,8 @@ namespace Survey.Areas.Admin.Controllers
 							string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
 							string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
 																					// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
-							var path = Path.Combine(Server.MapPath("~/App_Data/images/"), myfile);
-							modelQuestion.ImageUrl = "~/App_Data/images/" + myfile;
+							var path = Path.Combine(Server.MapPath("~/images/"), myfile);
+							modelQuestion.ImageUrl = "~/images/" + myfile;
 							filePicker.SaveAs(path);
 						}
 						else
