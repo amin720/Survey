@@ -10,7 +10,7 @@
     <input type="hidden" name="SurveyTitle" value="@Model.SurveyTitle" />
     <input type="hidden" name="SectionTitle" value="@Model.SectionTitle" />
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new { @class = "text-bloody-200" })
     @*@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })*@
 
     <div class="row">
@@ -67,7 +67,7 @@
     </div>
 }
 
-    <a href="@Url.Action("Section",new {surveyName = Model.SurveyTitle,sectionName = Model.SectionTitle})">بازگشت به @Model.SectionTitle</a>
+<a href="@Url.Action("Section",new {surveyName = Model.SurveyTitle,sectionName = Model.SectionTitle})">بازگشت به @Model.SectionTitle</a>
 
 
 
@@ -86,6 +86,6 @@
             }
         }
     </script>
-    
+
 }
 

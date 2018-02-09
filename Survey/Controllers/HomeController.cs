@@ -78,14 +78,15 @@ namespace Survey.Controllers
 			var model = new List<ExamViewModel>();
 
 			var sections = await _sectionRepository.GetAllBySurveyName(survey);
-			var sectionArray = await GetSection(survey, index);
-			var surveyModel = await _surveyRepository.Get(survey);
-			var section = await _sectionRepository.Get(sectionArray, surveyModel.Id);
 
 			if (sections.Count == index)
 			{
 				return RedirectToAction("Complete");
 			}
+
+			var sectionArray = await GetSection(survey, index);
+			var surveyModel = await _surveyRepository.Get(survey);
+			var section = await _sectionRepository.Get(sectionArray, surveyModel.Id);
 
 			var questions = await _questionRepository.GetAllBySectionName(await GetSection(survey, index));
 
@@ -169,7 +170,8 @@ namespace Survey.Controllers
 			}
 		}
 
-
+		[AllowAnonymous]
+		[HttpGet]
 		public async Task<ActionResult> Complete()
 		{
 			return View();

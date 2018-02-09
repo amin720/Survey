@@ -28,9 +28,13 @@
                 <div class="col-sm-9">
                     <h2 class="text-center">@ViewBag.PTitle</h2>
                 </div>
-                <div class="col-sm-3">
-                    <span class="pull-left label label-danger text-blue-600" dir="rtl" style="font-size: 1.8em"> @ViewBag.Current  از  @ViewBag.Total </span>
-                </div>
+                @if (ViewBag.Current != null || ViewBag.Total < ViewBag.Current)
+                {
+                    <div class="col-sm-3">
+                        <span class="pull-left label label-danger text-blue-600" dir="rtl" style="font-size: 1.8em"> @ViewBag.Current  از  @ViewBag.Total </span>
+                    </div>
+                }
+                
             </div>
             
             <p>

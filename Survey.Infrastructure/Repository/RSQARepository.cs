@@ -33,7 +33,7 @@ namespace Survey.Infrastructure.Repository
 
 				if (model != null)
 				{
-					throw new KeyNotFoundException(String.Empty, new Exception( "همچین مدلی وجود دارد."));
+					throw new KeyNotFoundException( "همچین مدلی وجود دارد.");
 				}
 
 				db.TBL_RSQA.Add(rsqa);
@@ -48,7 +48,7 @@ namespace Survey.Infrastructure.Repository
 
 				if (model == null)
 				{
-					throw new KeyNotFoundException(String.Empty, new Exception( "همچین مدلی وجود ندارد."));
+					throw new KeyNotFoundException( "همچین مدلی وجود ندارد.");
 				}
 
 				model.Survey_Id = rsqa.Survey_Id;
@@ -68,7 +68,7 @@ namespace Survey.Infrastructure.Repository
 
 				if (model == null)
 				{
-					throw new KeyNotFoundException(String.Empty, new Exception( "همچین مدلی وجود ندارد."));
+					throw new KeyNotFoundException("همچین مدلی وجود ندارد.");
 				}
 
 				db.TBL_RSQA.Remove(model);

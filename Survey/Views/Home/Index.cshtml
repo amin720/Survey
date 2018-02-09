@@ -7,79 +7,81 @@
 @using (Html.BeginForm("RegisterRespondent", "Home", new { survey = ViewBag.PTitle }, FormMethod.Post, new { @class = "form-horizontal text-maroon-500 text-right" }))
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary("", new { @class = "text-bloody-200" })
+    @Html.ValidationSummary(true, "", new { @class = "text-bloody-200" })
+
+    <h6 class="text-bloody-300">فیلد های ( * ) حتما پر شود.</h6>
 
     <div class="form-group">
-        <label for="Email" class="col-sm-2 label control-label text-black">ایمیل</label>
+        <label for="Email" class="col-sm-2 label control-label text-black">ایمیل *</label>
         <div class="col-sm-9">
             <input type="email" class=" form-control" id="Email" name="Email" placeholder="info@yourEmail.com" required />
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 label control-label text-black">سن</label>
+        <label class="col-sm-2 label control-label text-black">سن *</label>
         <div class="col-sm-9">
             <div class="pull-right">
                 <div class="md-radio md-radio-inline">
-                    <input id="age1" type="radio" name="Age" value="25-30">
+                    <input id="age1" type="radio" name="Age" value="25-30" required>
                     <label for="age1">25-30</label>
                 </div>
                 <div class="md-radio md-radio-inline">
-                    <input id="age2" type="radio" name="Age" value="30-35">
+                    <input id="age2" type="radio" name="Age" value="30-35" required>
                     <label for="age2">30-35</label>
                 </div>
                 <div class="md-radio md-radio-inline">
-                    <input id="age3" type="radio" name="Age" value="35-40">
+                    <input id="age3" type="radio" name="Age" value="35-40" required>
                     <label for="age3">35-40</label>
                 </div>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 label control-label text-black">جنسیت</label>
+        <label class="col-sm-2 label control-label text-black">جنسیت *</label>
         <div class="col-sm-9">
             <div class="pull-right">
                 <div class="md-radio md-radio-inline">
-                    <input id="gender1" type="radio" name="Gender" value="0">
+                    <input id="gender1" type="radio" name="Gender" value="0" required>
                     <label for="gender1">مرد</label>
                 </div>
                 <div class="md-radio md-radio-inline">
-                    <input id="gender2" type="radio" name="Gender" value="1">
+                    <input id="gender2" type="radio" name="Gender" value="1" required>
                     <label for="gender2">زن</label>
                 </div>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 label control-label text-black">میزان تحصیلات</label>
+        <label class="col-sm-2 label control-label text-black">میزان تحصیلات *</label>
         <div class="col-sm-9">
             <div class="pull-right">
                 <div class="md-radio md-radio-inline">
-                    <input id="degree1" type="radio" name="Degree" value="کاردانی">
+                    <input id="degree1" type="radio" name="Degree" value="کاردانی" required>
                     <label for="degree1">کاردانی</label>
                 </div>
                 <div class="md-radio md-radio-inline">
-                    <input id="degree2" type="radio" name="Degree" value="کارشناسی">
+                    <input id="degree2" type="radio" name="Degree" value="کارشناسی" required>
                     <label for="degree2">کارشناسی</label>
                 </div>
                 <div class="md-radio md-radio-inline">
-                    <input id="degree3" type="radio" name="Degree" value="کارشناسی ارشد">
+                    <input id="degree3" type="radio" name="Degree" value="کارشناسی ارشد" required>
                     <label for="degree3">کارشناسی ارشد</label>
                 </div>
                 <div class="md-radio md-radio-inline">
-                    <input id="degree4" type="radio" name="Degree" value="دکتری">
+                    <input id="degree4" type="radio" name="Degree" value="دکتری" required>
                     <label for="degree4">دکتری</label>
                 </div>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <label for="DurationMarried" class="col-sm-2 label control-label text-black">مدت ازدواج</label>
+        <label for="DurationMarried" class="col-sm-2 label control-label text-black">مدت ازدواج *</label>
         <div class="col-sm-9">
             <input type="text" class=" form-control" id="DurationMarried" name="DurationMarried" placeholder="نمونه: 3 سال" required />
         </div>
     </div>
     <div class="form-group">
-        <label for="Major" class="col-sm-2 label control-label text-black">رشته تحصیلی</label>
+        <label for="Major" class="col-sm-2 label control-label text-black">رشته تحصیلی *</label>
         <div class="col-sm-9">
             <input type="text" class=" form-control" id="Major" name="Major" placeholder="نمونه: مهندسی نرم افزار یا علوم کامپیوتر" required />
         </div>

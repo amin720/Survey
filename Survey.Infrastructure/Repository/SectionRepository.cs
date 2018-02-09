@@ -44,7 +44,7 @@ namespace Survey.Infrastructure.Repository
 
 				if (model != null)
 				{
-					throw new KeyNotFoundException(String.Empty, new Exception(sections.Name + "همچین مدلی وجود دارد."));
+					throw new KeyNotFoundException(sections.Name + "همچین مدلی وجود دارد.");
 				}
 
 				db.TBL_Sections.Add(sections);
@@ -59,7 +59,7 @@ namespace Survey.Infrastructure.Repository
 
 				if (model == null)
 				{
-					throw new KeyNotFoundException(String.Empty, new Exception(sections.Name + "همچین مدلی وجود ندارد."));
+					throw new KeyNotFoundException(sections.Name + "همچین مدلی وجود ندارد.");
 				}
 
 				model.Name = sections.Name;
@@ -78,7 +78,7 @@ namespace Survey.Infrastructure.Repository
 
 				if (model == null)
 				{
-					throw new KeyNotFoundException(String.Empty, new Exception(name + "همچین مدلی وجود ندارد."));
+					throw new KeyNotFoundException(name + "همچین مدلی وجود ندارد.");
 				}
 
 				db.TBL_Sections.Remove(model);
