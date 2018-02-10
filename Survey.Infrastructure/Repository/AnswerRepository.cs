@@ -56,7 +56,6 @@ namespace Survey.Infrastructure.Repository
 				}
 
 				model.Text = answers.Text;
-				model.TBL_RSQA = answers.TBL_RSQA;
 				model.Question_Id = answers.Question_Id;
 
 				await db.SaveChangesAsync();

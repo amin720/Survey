@@ -30,12 +30,12 @@ namespace Survey.Infrastructure.Repository
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(respondents.Email);
+				//var model = await Get(respondents.Email);
 
-				if (model != null)
-				{
-					throw new KeyNotFoundException(respondents.Email + " همچین کاربری ثبت کرده است . ");
-				}
+				//if (model != null)
+				//{
+				//	throw new KeyNotFoundException(respondents.Email + " همچین کاربری ثبت کرده است . ");
+				//}
 
 				db.TBL_Respondents.Add(respondents);
 				await db.SaveChangesAsync();
@@ -54,7 +54,6 @@ namespace Survey.Infrastructure.Repository
 
 				model.Email = respondents.Email;
 				model.Age = respondents.Age;
-				model.TBL_RSQA = respondents.TBL_RSQA;
 				model.Degree = respondents.Degree;
 				model.DurationMarried = respondents.DurationMarried;
 				model.Gender = respondents.Gender;

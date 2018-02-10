@@ -12,7 +12,7 @@ namespace Survey.Core.Interfaces
 		Task<TBL_Surveys> Get(string name);
 		Task<IEnumerable<TBL_Surveys>> GetAll();
 		Task Create(TBL_Surveys surveys);
-		Task Edit(TBL_Surveys surveys);
+		Task Edit(TBL_Surveys surveys,string olderSurvey);
 		Task Delete(string name);
 	}
 }

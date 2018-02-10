@@ -39,21 +39,19 @@ namespace Survey.Infrastructure.Repository
 				await db.SaveChangesAsync();
 			}
 		}
-		public async Task Edit(TBL_Surveys surveys)
+		public async Task Edit(TBL_Surveys surveys, string olderSurvey)
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(surveys.Name);
+				var model = await Get(olderSurvey);
 
 				if (model == null)
 				{
-					throw new KeyNotFoundException(surveys.Name + "همچین مدلی وجود ندارد.");
+					throw new KeyNotFoundException(olderSurvey + "همچین مدلی وجود ندارد.");
 				}
 
 				model.Name = surveys.Name;
 				model.Description = surveys.Description;
-				model.TBL_RSQA = surveys.TBL_RSQA;
-				model.TBL_Sections = surveys.TBL_Sections;
 				model.User_Id = surveys.User_Id;
 
 				await db.SaveChangesAsync();

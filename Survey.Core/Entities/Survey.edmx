@@ -65,7 +65,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Text" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="350" Nullable="false" />
           <Property Name="Question_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TBL_Questions">
@@ -74,7 +74,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="350" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="ImageUrl" Type="nvarchar" MaxLength="400" />
           <Property Name="Section_Id" Type="int" Nullable="false" />
         </EntityType>
@@ -83,12 +83,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="190" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="190" />
           <Property Name="Age" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Gender" Type="int" Nullable="false" />
           <Property Name="Degree" Type="nvarchar" MaxLength="160" Nullable="false" />
           <Property Name="DurationMarried" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Major" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="Major" Type="nvarchar" MaxLength="70" />
         </EntityType>
         <EntityType Name="TBL_RSQA">
           <Key>
@@ -111,7 +111,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Survey_Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="350" />
+          <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="TBL_Surveys">
           <Key>
@@ -474,7 +474,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
           <Property Name="Question_Id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TBL_Questions" Relationship="SurveyModel.FK_Answer_Question" FromRole="TBL_Answers" ToRole="TBL_Questions" />
           <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Answer" FromRole="TBL_Answers" ToRole="TBL_RSQA" />
@@ -485,7 +485,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ImageUrl" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="Section_Id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TBL_Answers" Relationship="SurveyModel.FK_Answer_Question" FromRole="TBL_Questions" ToRole="TBL_Answers" />
@@ -497,12 +497,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="190" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="190" FixedLength="false" Unicode="true" />
           <Property Name="Age" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="Int32" Nullable="false" />
           <Property Name="Degree" Type="String" Nullable="false" MaxLength="160" FixedLength="false" Unicode="true" />
           <Property Name="DurationMarried" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Major" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="Major" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Respondent" FromRole="TBL_Respondents" ToRole="TBL_RSQA" />
         </EntityType>
         <EntityType Name="TBL_RSQA">
@@ -531,7 +531,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Survey_Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TBL_Questions" Relationship="SurveyModel.FK_Question_Section" FromRole="TBL_Sections" ToRole="TBL_Questions" />
           <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Section" FromRole="TBL_Sections" ToRole="TBL_RSQA" />
           <NavigationProperty Name="TBL_Surveys" Relationship="SurveyModel.FK_Section_Survey" FromRole="TBL_Sections" ToRole="TBL_Surveys" />

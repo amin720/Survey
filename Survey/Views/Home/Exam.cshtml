@@ -10,6 +10,7 @@
     var count = 0;
 
     int index = ViewBag.Index;
+    
     index++;
 }
 
@@ -23,7 +24,7 @@
     {
         <input type="hidden" name="[@count].Survey" value="@ViewBag.SurveyTitle" />
         <input type="hidden" name="[@count].Index" value="@index" />
-        <input type="hidden" name="[@count].Email" value="@ViewBag.Email" />
+        @*<input type="hidden" name="[@count].Email" value="@ViewBag.Email" />*@
 
         var answers = item.Answer.Split('-');
         <div class="form-group">

@@ -62,7 +62,12 @@ namespace Survey.Areas.Admin.Controllers
 			var model = new SurveyViewModel();
 			if (survey != null)
 			{
-				model = new SurveyViewModel { Surveyses = await _surveyRepository.GetAll(), SurveyTitle = survey.Name, SurveyDescription = survey.Description };
+				model = new SurveyViewModel
+				{
+					Surveyses = await _surveyRepository.GetAll(),
+					SurveyTitle = survey.Name,
+					SurveyDescription = survey.Description
+				};
 			}
 			else
 			{
@@ -95,6 +100,11 @@ namespace Survey.Areas.Admin.Controllers
 					ModelState.AddModelError(string.Empty, "لطفا مقدار های مناسب پر کنید");
 				}
 
+				if (string.IsNullOrEmpty(surveys.SurveyTitle))
+				{
+					surveys.SurveyTitle = surveys.NewSurveyTitle;
+				}
+
 				survey = await _surveyRepository.Get(surveys.SurveyTitle);
 
 
@@ -107,6 +117,12 @@ namespace Survey.Areas.Admin.Controllers
 						User_Id = user.Id
 					});
 					return RedirectToAction("Section", new { surveyName = surveys.SurveyTitle });
+				}
+				else
+				{
+					survey.Name = surveys.NewSurveyTitle;
+					survey.Description = surveys.SurveyDescription;
+					await _surveyRepository.Edit(survey,surveys.SurveyTitle);
 				}
 				model.SurveyTitle = survey.Name;
 
@@ -137,7 +153,7 @@ namespace Survey.Areas.Admin.Controllers
 			{
 				var survey = await _surveyRepository.Get(surveyName);
 				var section = await _sectionRepository.Get(sectionName, survey.Id);
-				model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAllBySurveyName(surveyName), SurveyTitle = surveyName, SectionTitle = section.Name,SectionDescription = section.Description};
+				model = new SurveyViewModel { Sectionses = await _sectionRepository.GetAllBySurveyName(surveyName), SurveyTitle = surveyName, SectionTitle = section.Name, SectionDescription = section.Description };
 			}
 
 			var user = await GetloggedInUser();

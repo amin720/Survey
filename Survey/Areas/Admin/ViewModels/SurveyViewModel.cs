@@ -10,13 +10,16 @@ namespace Survey.Areas.Admin.ViewModels
 	{
 		public string SurveyTitle { get; set; }
 		public string SurveyDescription { get; set; }
+		public string NewSurveyTitle { get; set; }
 
 		public string SectionTitle { get; set; }
 		public string SectionDescription { get; set; }
+		public string NewSectionTitle { get; set; }
 
 		public string QuestionTitle { get; set; }
 		public string QuestionDescription { get; set; }
 		public string QuestionImageUrl { get; set; }
+		public string NewQuestionTitle { get; set; }
 
 		public string Option { get; set; }	
 
