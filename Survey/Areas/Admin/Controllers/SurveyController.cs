@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Survey.Areas.Admin.Models;
 using Survey.Areas.Admin.ViewModels;
 using Survey.Core.Entities;
 using Survey.Core.Interfaces;
@@ -22,22 +25,29 @@ namespace Survey.Areas.Admin.Controllers
 		private readonly ISectionRepository _sectionRepository;
 		private readonly IQuestionRepository _questionRepository;
 		private readonly IAnswerRepository _answerRepository;
+		private readonly IRSQARepository _rsqaRepository;
+		private readonly IRespondentRepository _respondentRepository;
 
 		public SurveyController()
-			: this(new UserRepository(), new SurveyRepository(), new SectionRepository(), new QuestionRepository(), new AnswerRepository())
+			: this(new UserRepository(), new SurveyRepository(), new SectionRepository(),
+				  new QuestionRepository(), new AnswerRepository(), new RSQARepository(),
+				  new RespondentRepository())
 		{
 
 		}
 
 		public SurveyController(IUserRepository userRepository, ISurveyRepository surveyRepository,
 								ISectionRepository sectionRepository, IQuestionRepository questionRepository,
-								IAnswerRepository answerRepository)
+								IAnswerRepository answerRepository, IRSQARepository rsqaRepository,
+								IRespondentRepository respondentRepository)
 		{
 			_userRepository = userRepository;
 			_surveyRepository = surveyRepository;
 			_sectionRepository = sectionRepository;
 			_questionRepository = questionRepository;
 			_answerRepository = answerRepository;
+			_rsqaRepository = rsqaRepository;
+			_respondentRepository = respondentRepository;
 		}
 
 		// GET: Admin/Survey
@@ -122,7 +132,7 @@ namespace Survey.Areas.Admin.Controllers
 				{
 					survey.Name = surveys.NewSurveyTitle;
 					survey.Description = surveys.SurveyDescription;
-					await _surveyRepository.Edit(survey,surveys.SurveyTitle);
+					await _surveyRepository.Edit(survey, surveys.SurveyTitle);
 				}
 				model.SurveyTitle = survey.Name;
 
@@ -295,7 +305,9 @@ namespace Survey.Areas.Admin.Controllers
 				{
 					Title = questions.QuestionTitle,
 					Section_Id = section.Id,
-					Description = questions.QuestionDescription
+					Description = questions.QuestionDescription,
+					StartLabel = questions.StartLabel,
+					EndLabel = questions.EndLabel,
 				};
 
 				if (question == null)
@@ -338,41 +350,45 @@ namespace Survey.Areas.Admin.Controllers
 				}
 				else
 				{
-					if (filePicker != null)
-					{
-						var allowedExtensions = new[] {
-							".Jpg", ".png", ".jpg", "jpeg"
-						};
+					TempData["question"] = new SurveyViewModel();
+					TempData["question"] = questions;
 
-						var fileName = Path.GetFileName(filePicker.FileName);
-						var ext = Path.GetExtension(filePicker.FileName); //getting the extension(ex-.jpg)
-						if (allowedExtensions.Contains(ext)) //check what type of extension
-						{
-							string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
-							string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
-																					// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
-							var path = Path.Combine(Server.MapPath("~/App_Data/images/"), myfile);
-							modelQuestion.ImageUrl = "~/App_Data/images/" + myfile;
-							filePicker.SaveAs(path);
-						}
-						else
-						{
-							ModelState.AddModelError(string.Empty, "Please choose only Image file");
-						}
-					}
+					return RedirectToAction("EditQuestionAnswer");
+					//if (filePicker != null)
+					//{
+					//	var allowedExtensions = new[] {
+					//		".Jpg", ".png", ".jpg", "jpeg"
+					//	};
 
-					await _questionRepository.Edit(modelQuestion);
+					//	var fileName = Path.GetFileName(filePicker.FileName);
+					//	var ext = Path.GetExtension(filePicker.FileName); //getting the extension(ex-.jpg)
+					//	if (allowedExtensions.Contains(ext)) //check what type of extension
+					//	{
+					//		string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
+					//		string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
+					//																// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
+					//		var path = Path.Combine(Server.MapPath("~/images/"), myfile);
+					//		modelQuestion.ImageUrl = "~/images/" + myfile;
+					//		filePicker.SaveAs(path);
+					//	}
+					//	else
+					//	{
+					//		ModelState.AddModelError(string.Empty, "Please choose only Image file");
+					//	}
+					//}
 
-					question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
+					//await _questionRepository.Edit(modelQuestion);
 
-					foreach (var item in answers)
-					{
-						await _answerRepository.Edit(new TBL_Answers
-						{
-							Text = item,
-							Question_Id = question.Id
-						});
-					}
+					//question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
+
+					//foreach (var item in answers)
+					//{
+					//	await _answerRepository.Edit(new TBL_Answers
+					//	{
+					//		Text = item,
+					//		Question_Id = question.Id
+					//	});
+					//}
 				}
 
 				question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
@@ -396,11 +412,137 @@ namespace Survey.Areas.Admin.Controllers
 
 		}
 
+		// GET: Admin/Section/Edit
+		[HttpGet]
+		[Route("EditQuestionAnswer")]
+		[Authorize(Roles = "admin")]
+		public async Task<ActionResult> EditQuestionAnswer(SurveyViewModel question)
+		{
+			SurveyViewModel model = (SurveyViewModel)TempData["question"];
+
+			var user = await GetloggedInUser();
+			ViewBag.Username = user.UserName;
+			ViewBag.DisplayName = user.DisplayName;
+
+			return View(model);
+		}
+		// Post: Admin/Section/Create
+		[Route("EditQuestionAnswer")]
+		[Authorize(Roles = "admin")]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> EditQuestionAnswer(SurveyViewModel question, HttpPostedFileBase filePicker)
+		{
+			var user = await GetloggedInUser();
+			ViewBag.Username = user.UserName;
+			ViewBag.DisplayName = user.DisplayName;
 
 
+			var survey = await _surveyRepository.Get(question.SurveyTitle);
+			var section = await _sectionRepository.Get(question.SectionTitle, survey.Id);
+			var questionModel = new TBL_Questions();
 
 
+			try
+			{
+				questionModel = await _questionRepository.Get(question.QuestionTitle, section.Id);
 
+				var answers = question.Option.Split('-');
+
+				var modelQuestion = new TBL_Questions
+				{
+					Title = question.QuestionTitle,
+					Section_Id = section.Id,
+					Description = question.QuestionDescription
+				};
+
+				if (filePicker != null)
+				{
+					var allowedExtensions = new[] {
+						".Jpg", ".png", ".jpg", "jpeg"
+					};
+
+					var fileName = Path.GetFileName(filePicker.FileName);
+					var ext = Path.GetExtension(filePicker.FileName); //getting the extension(ex-.jpg)
+					if (allowedExtensions.Contains(ext)) //check what type of extension
+					{
+						string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
+						string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
+																				// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
+						var path = Path.Combine(Server.MapPath("~/images/"), myfile);
+						modelQuestion.ImageUrl = "~/images/" + myfile;
+						filePicker.SaveAs(path);
+					}
+					else
+					{
+						ModelState.AddModelError(string.Empty, "Please choose only Image file");
+					}
+				}
+
+				await _questionRepository.Edit(modelQuestion, question.QuestionTitle);
+
+				questionModel = await _questionRepository.Get(question.QuestionTitle, section.Id);
+
+				foreach (var item in answers)
+				{
+					await _answerRepository.Edit(new TBL_Answers
+					{
+						Text = item,
+						Question_Id = questionModel.Id
+					});
+				}
+
+				return RedirectToAction("QuestionAnswer", new { surveyName = question.SurveyTitle, sectionName = question.SectionTitle });
+			}
+			catch (Exception e)
+			{
+				ModelState.AddModelError(string.Empty, e.Message);
+				return View(question);
+			}
+		}
+
+
+		public async Task<ActionResult> ExportToExcel()
+		{
+			var export = new List<Export2Excel>();
+			var rsqa = await _rsqaRepository.GetAll();
+
+			foreach (var item in rsqa)
+			{
+				var survey = await _surveyRepository.Get(item.Survey_Id);
+				var section = await _sectionRepository.Get(item.Section_Id, item.Survey_Id);
+				var question = await _questionRepository.Get(item.Question_Id, item.Section_Id);
+				var answer = await _answerRepository.Get(item.Answer_Id, item.Question_Id);
+				var respondent = await _respondentRepository.Get(item.Respondent_Id);
+
+				export.Add(new Export2Excel
+				{
+					Survey = survey.Name,
+					Section = section.Name,
+					Question = question.Title + question.Description,
+					Answer = answer.Text,
+					Degree = respondent.Degree,
+					Gender = respondent.Gender == 0? "مرد":"زن",
+					Age = respondent.Age
+				});
+			}
+
+			var gv = new GridView();
+			gv.DataSource = export;
+			gv.DataBind();
+			Response.ClearContent();
+			Response.Buffer = true;
+			Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
+			Response.ContentType = "application/ms-excel";
+			Response.Charset = "";
+			StringWriter objStringWriter = new StringWriter();
+			HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+			gv.RenderControl(objHtmlTextWriter);
+			Response.Output.Write(objStringWriter.ToString());
+			Response.Flush();
+			Response.End();
+			return View("Survey");
+		}
 
 
 

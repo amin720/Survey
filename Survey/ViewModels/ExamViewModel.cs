@@ -11,6 +11,8 @@ namespace Survey.ViewModels
 		public string QuestionDescription { get; set; }
 		public string QuestionImgeUrl { get; set; }
 		public string Answer { get; set; }
+		public string StartLabel { get; set; }
+		public string EndLabel { get; set; }
 
 
 		public string Survey { get; set; }

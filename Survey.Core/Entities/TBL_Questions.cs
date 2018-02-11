@@ -26,6 +26,8 @@ namespace Survey.Core.Entities
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public int Section_Id { get; set; }
+        public string StartLabel { get; set; }
+        public string EndLabel { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TBL_Answers> TBL_Answers { get; set; }

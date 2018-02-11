@@ -67,6 +67,9 @@
     <Compile Include="Entities\AspNetUserLogin.cs">
       <DependentUpon>Survey.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Statistic.cs">
+      <DependentUpon>Survey.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Survey.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

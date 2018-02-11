@@ -18,6 +18,13 @@ namespace Survey.Infrastructure.Repository
 				return await db.TBL_Answers.SingleOrDefaultAsync(s => s.Text == text && s.Question_Id == questionId);
 			}
 		}
+		public async Task<TBL_Answers> Get(int id, int questionId)
+		{
+			using (var db = new SurveyEntities())
+			{
+				return await db.TBL_Answers.SingleOrDefaultAsync(s => s.Id == id && s.Question_Id == questionId);
+			}
+		}
 
 		public async Task<List<TBL_Answers>> GetAllByQuestionName(string questionName)
 		{

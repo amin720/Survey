@@ -60,6 +60,34 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Survey.dbo.BlockedIp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="BlockedIp">
+          <Property Name="Id" Type="bigint" />
+          <Property Name="IpAddress" Type="nvarchar" MaxLength="100" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Country">
+          <Property Name="Id" Type="bigint" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="450" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="450" />
+          <Property Name="ViewCount" Type="int" />
+        </EntityType>-->
+        <EntityType Name="Statistics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="IpAddress" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserAgent" Type="nvarchar" MaxLength="255" />
+          <Property Name="UserOs" Type="nvarchar" MaxLength="250" />
+          <Property Name="Referer" Type="nvarchar(max)" />
+          <Property Name="PageViewed" Type="nvarchar(max)" />
+          <Property Name="DateStamp" Type="datetime" />
+        </EntityType>
         <EntityType Name="TBL_Answers">
           <Key>
             <PropertyRef Name="Id" />
@@ -77,6 +105,8 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="ImageUrl" Type="nvarchar" MaxLength="400" />
           <Property Name="Section_Id" Type="int" Nullable="false" />
+          <Property Name="StartLabel" Type="nvarchar" MaxLength="250" />
+          <Property Name="EndLabel" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="TBL_Respondents">
           <Key>
@@ -292,6 +322,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Statistics" EntityType="Self.Statistics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TBL_Answers" EntityType="Self.TBL_Answers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TBL_Questions" EntityType="Self.TBL_Questions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TBL_Respondents" EntityType="Self.TBL_Respondents" Schema="dbo" store:Type="Tables" />
@@ -360,6 +391,7 @@
           <EntitySet Name="AspNetUserClaims" EntityType="SurveyModel.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="SurveyModel.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="SurveyModel.AspNetUser" />
+          <EntitySet Name="Statistics" EntityType="SurveyModel.Statistic" />
           <EntitySet Name="TBL_Answers" EntityType="SurveyModel.TBL_Answers" />
           <EntitySet Name="TBL_Questions" EntityType="SurveyModel.TBL_Questions" />
           <EntitySet Name="TBL_Respondents" EntityType="SurveyModel.TBL_Respondents" />
@@ -469,6 +501,18 @@
           <NavigationProperty Name="TBL_Surveys" Relationship="SurveyModel.FK_Survey_AspNetUsers" FromRole="AspNetUser" ToRole="TBL_Surveys" />
           <NavigationProperty Name="AspNetRoles" Relationship="SurveyModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
+        <EntityType Name="Statistic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="IpAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserAgent" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UserOs" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Referer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PageViewed" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateStamp" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="TBL_Answers">
           <Key>
             <PropertyRef Name="Id" />
@@ -488,6 +532,8 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ImageUrl" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="Section_Id" Type="Int32" Nullable="false" />
+          <Property Name="StartLabel" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="EndLabel" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TBL_Answers" Relationship="SurveyModel.FK_Answer_Question" FromRole="TBL_Questions" ToRole="TBL_Answers" />
           <NavigationProperty Name="TBL_Sections" Relationship="SurveyModel.FK_Question_Section" FromRole="TBL_Questions" ToRole="TBL_Sections" />
           <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Question" FromRole="TBL_Questions" ToRole="TBL_RSQA" />
@@ -743,6 +789,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Statistics">
+            <EntityTypeMapping TypeName="SurveyModel.Statistic">
+              <MappingFragment StoreEntitySet="Statistics">
+                <ScalarProperty Name="DateStamp" ColumnName="DateStamp" />
+                <ScalarProperty Name="PageViewed" ColumnName="PageViewed" />
+                <ScalarProperty Name="Referer" ColumnName="Referer" />
+                <ScalarProperty Name="UserOs" ColumnName="UserOs" />
+                <ScalarProperty Name="UserAgent" ColumnName="UserAgent" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TBL_Answers">
             <EntityTypeMapping TypeName="SurveyModel.TBL_Answers">
               <MappingFragment StoreEntitySet="TBL_Answers">
@@ -755,6 +814,8 @@
           <EntitySetMapping Name="TBL_Questions">
             <EntityTypeMapping TypeName="SurveyModel.TBL_Questions">
               <MappingFragment StoreEntitySet="TBL_Questions">
+                <ScalarProperty Name="EndLabel" ColumnName="EndLabel" />
+                <ScalarProperty Name="StartLabel" ColumnName="StartLabel" />
                 <ScalarProperty Name="Section_Id" ColumnName="Section_Id" />
                 <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

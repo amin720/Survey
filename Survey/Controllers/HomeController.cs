@@ -60,7 +60,7 @@ namespace Survey.Controllers
 		{
 			try
 			{
-				model.Email = "test" + GetRandomNumber() + "@test.com";
+				model.Email = GenerateEmailAddress();
 
 				await _respondentRepository.Create(model);
 
@@ -114,6 +114,8 @@ namespace Survey.Controllers
 					QuestionDescription = item.Description,
 					QuestionImgeUrl = item.ImageUrl,
 					Answer = answer,
+					StartLabel = item.StartLabel,
+					EndLabel = item.EndLabel
 				});
 			}
 
@@ -134,12 +136,18 @@ namespace Survey.Controllers
 		[AllowAnonymous]
 		public async Task<ActionResult> Exam(IList<ExamViewModel> model)
 		{
+			string survey = String.Empty;
+			string email = string.Empty;
+			int index = 0;
+
+			ViewBag.ListQA = model;
+			ViewBag.SurveyTitle = survey;
+			ViewBag.Index = index;
+			ViewBag.Email = email;
+			ViewBag.Current = index;
+
 			try
 			{
-				string survey = String.Empty;
-				string email = string.Empty;
-				int index = 0;
-
 				foreach (var item in model)
 				{
 					survey = item.Survey;
@@ -171,6 +179,10 @@ namespace Survey.Controllers
 			}
 			catch (Exception e)
 			{
+				var section = await GetSection(survey, index);
+
+				ViewBag.PTitle = section;
+
 				ModelState.AddModelError(String.Empty, e.Message);
 				return View();
 			}
@@ -204,7 +216,7 @@ namespace Survey.Controllers
 		// Generate Random Email Address 
 		public static string GenerateEmailAddress()
 		{
-			return "vitalina.boiko" + GetRandomNumber() + "@gmail.com";
+			return "eagle720" + GetRandomNumber() + "@info.com";
 		}
 
 		// Generate random number for email address

@@ -29,6 +29,7 @@ namespace Survey.Core.Entities
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Statistic> Statistics { get; set; }
         public virtual DbSet<TBL_Answers> TBL_Answers { get; set; }
         public virtual DbSet<TBL_Questions> TBL_Questions { get; set; }
         public virtual DbSet<TBL_Respondents> TBL_Respondents { get; set; }

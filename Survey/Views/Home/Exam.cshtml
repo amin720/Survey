@@ -21,6 +21,8 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-bloody-200" })
 
+    <h6 class="text-bloody-300">لطفا به تمامی سوالات پاسخ دهید.</h6>
+
     foreach (var item in List)
     {
         <input type="hidden" name="[@count].Survey" value="@ViewBag.SurveyTitle" />
@@ -41,16 +43,35 @@
                 <input type="hidden" name="[@count].QuestionImgeUrl" value="@item.QuestionImgeUrl" />
 
             }
-
+            
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="pull-right">
+                        <label class="@*vertical-text*@ ">@item.StartLabel</label>
+                    </div>
+                </div>
+                <div class="col-sm-7"></div>
+            </div>
+            
             <div class="col-sm-12">
                 <div class="pull-right">
                     @foreach (string t in answers)
                     {
+
                         <div class="md-radio md-radio-inline">
-                            <input id="@item.QuestionTitle@t" type="radio" name="[@count].Answer" value="@t">
+                            <input id="@item.QuestionTitle@t" type="radio" name="[@count].Answer" value="@t" required>
                             <label for="@item.QuestionTitle@t">@t</label>
                         </div>
+
                     }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7"></div>
+                <div class="col-sm-5">
+                    <div class="pull-left">
+                        <label class="@*vertical-text*@">@item.EndLabel</label>
+                    </div>
                 </div>
             </div>
         </div>

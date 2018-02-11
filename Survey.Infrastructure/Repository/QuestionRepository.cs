@@ -18,6 +18,13 @@ namespace Survey.Infrastructure.Repository
 				return await db.TBL_Questions.SingleOrDefaultAsync(s => s.Title == title && s.Section_Id == sectionId);
 			}
 		}
+		public async Task<TBL_Questions> Get(int id, int sectionId)
+		{
+			using (var db = new SurveyEntities())
+			{
+				return await db.TBL_Questions.SingleOrDefaultAsync(s => s.Id == id && s.Section_Id == sectionId);
+			}
+		}
 
 		public async Task<List<TBL_Questions>> GetAllBySectionName(string sectionName)
 		{
@@ -52,11 +59,11 @@ namespace Survey.Infrastructure.Repository
 				await db.SaveChangesAsync();
 			}
 		}
-		public async Task Edit(TBL_Questions questions)
+		public async Task Edit(TBL_Questions questions,string olderQuestion)
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(questions.Title, questions.Section_Id);
+				var model = await Get(olderQuestion, questions.Section_Id);
 
 				if (model == null)
 				{

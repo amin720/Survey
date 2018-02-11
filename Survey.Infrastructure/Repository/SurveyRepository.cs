@@ -17,6 +17,13 @@ namespace Survey.Infrastructure.Repository
 				return await db.TBL_Surveys.SingleOrDefaultAsync(s => s.Name == name);
 			}
 		}
+		public async Task<TBL_Surveys> Get(int id)
+		{
+			using (var db = new SurveyEntities())
+			{
+				return await db.TBL_Surveys.SingleOrDefaultAsync(s => s.Id == id);
+			}
+		}
 		public async Task<IEnumerable<TBL_Surveys>> GetAll()
 		{
 			using (var db = new SurveyEntities())

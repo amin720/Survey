@@ -5,16 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="76c612b0609c4ff293c5b908054bc703" Name="Diagram1">
-        <EntityTypeShape EntityType="SurveyModel.AspNetRole" Width="1.5" PointX="0.75" PointY="6.375" />
-        <EntityTypeShape EntityType="SurveyModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3.25" />
-        <EntityTypeShape EntityType="SurveyModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="9.25" />
-        <EntityTypeShape EntityType="SurveyModel.AspNetUser" Width="1.5" PointX="3" PointY="4.75" />
-        <EntityTypeShape EntityType="SurveyModel.TBL_Answers" Width="1.5" PointX="12" PointY="10" />
-        <EntityTypeShape EntityType="SurveyModel.TBL_Questions" Width="1.5" PointX="9.75" PointY="9.625" />
-        <EntityTypeShape EntityType="SurveyModel.TBL_Respondents" Width="1.5" PointX="12" PointY="5.875" />
-        <EntityTypeShape EntityType="SurveyModel.TBL_RSQA" Width="1.5" PointX="14.25" PointY="7.625" />
-        <EntityTypeShape EntityType="SurveyModel.TBL_Sections" Width="1.5" PointX="7.5" PointY="9.75" />
-        <EntityTypeShape EntityType="SurveyModel.TBL_Surveys" Width="1.5" PointX="5.25" PointY="6.125" />
+        <EntityTypeShape EntityType="SurveyModel.AspNetRole" Width="1.5" PointX="0.75" PointY="6.625" />
+        <EntityTypeShape EntityType="SurveyModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="9.5" />
+        <EntityTypeShape EntityType="SurveyModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="7" />
+        <EntityTypeShape EntityType="SurveyModel.AspNetUser" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="SurveyModel.Statistic" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SurveyModel.TBL_Answers" Width="1.5" PointX="12" PointY="7.5" />
+        <EntityTypeShape EntityType="SurveyModel.TBL_Questions" Width="1.5" PointX="9.75" PointY="7" />
+        <EntityTypeShape EntityType="SurveyModel.TBL_Respondents" Width="1.5" PointX="12" PointY="3.5" />
+        <EntityTypeShape EntityType="SurveyModel.TBL_RSQA" Width="1.5" PointX="14.25" PointY="5.25" />
+        <EntityTypeShape EntityType="SurveyModel.TBL_Sections" Width="1.5" PointX="7.5" PointY="7.25" />
+        <EntityTypeShape EntityType="SurveyModel.TBL_Surveys" Width="1.5" PointX="5.25" PointY="3.5" />
         <AssociationConnector Association="SurveyModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="SurveyModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="SurveyModel.FK_Survey_AspNetUsers" />

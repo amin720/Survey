@@ -20,6 +20,8 @@ namespace Survey.Areas.Admin.ViewModels
 		public string QuestionDescription { get; set; }
 		public string QuestionImageUrl { get; set; }
 		public string NewQuestionTitle { get; set; }
+		public string StartLabel { get; set; }
+		public string EndLabel { get; set; }
 
 		public string Option { get; set; }	
 
