@@ -10,7 +10,8 @@
     var count = 0;
 
     int index = ViewBag.Index;
-    
+    //int index = Model.Index;
+
     index++;
 }
 
@@ -24,7 +25,8 @@
     {
         <input type="hidden" name="[@count].Survey" value="@ViewBag.SurveyTitle" />
         <input type="hidden" name="[@count].Index" value="@index" />
-        @*<input type="hidden" name="[@count].Email" value="@ViewBag.Email" />*@
+        @*<input type="hidden" name="[@count].Index" value="@Model.Index" />*@
+        <input type="hidden" name="[@count].Email" value="@ViewBag.Email" />
 
         var answers = item.Answer.Split('-');
         <div class="form-group">
@@ -48,7 +50,7 @@
                             <input id="@item.QuestionTitle@t" type="radio" name="[@count].Answer" value="@t">
                             <label for="@item.QuestionTitle@t">@t</label>
                         </div>
-}
+                    }
                 </div>
             </div>
         </div>

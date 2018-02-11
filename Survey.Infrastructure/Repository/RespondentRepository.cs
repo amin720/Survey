@@ -30,12 +30,15 @@ namespace Survey.Infrastructure.Repository
 		{
 			using (var db = new SurveyEntities())
 			{
-				//var model = await Get(respondents.Email);
+				var model = await Get(respondents.Email);
 
-				//if (model != null)
-				//{
-				//	throw new KeyNotFoundException(respondents.Email + " همچین کاربری ثبت کرده است . ");
-				//}
+				if (model != null)
+				{
+					throw new KeyNotFoundException(respondents.Email + " همچین کاربری ثبت کرده است . ");
+				}
+
+				//respondents.Email = "test@test.test";
+				respondents.Major = "test";
 
 				db.TBL_Respondents.Add(respondents);
 				await db.SaveChangesAsync();

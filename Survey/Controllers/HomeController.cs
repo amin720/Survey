@@ -60,10 +60,12 @@ namespace Survey.Controllers
 		{
 			try
 			{
+				model.Email = "test" + GetRandomNumber() + "@test.com";
+
 				await _respondentRepository.Create(model);
 
-				//return RedirectToAction("Exam", new { survey = survey, index = 0, email = model.Email });
-				return RedirectToAction("Exam", new { survey = survey, index = 0 });
+				return RedirectToAction("Exam", new { survey = survey, index = 0, email = model.Email });
+				//return RedirectToAction("Exam", new { survey = survey, index = 0 });
 			}
 			catch (Exception e)
 			{
@@ -74,8 +76,8 @@ namespace Survey.Controllers
 
 		[AllowAnonymous]
 		[HttpGet]
-		//public async Task<ActionResult> Exam(string survey, int index, string email)
-		public async Task<ActionResult> Exam(string survey, int index)
+		public async Task<ActionResult> Exam(string survey, int index, string email)
+		//public async Task<ActionResult> Exam(string survey, int index)
 		{
 			var model = new List<ExamViewModel>();
 
@@ -120,7 +122,7 @@ namespace Survey.Controllers
 			ViewBag.PTitle = section.Name;
 			ViewBag.PDescription = section.Description;
 			ViewBag.Index = index;
-			//ViewBag.Email = email;
+			ViewBag.Email = email;
 			ViewBag.Total = sections.Count;
 			ViewBag.Current = index + 1;
 
@@ -135,13 +137,13 @@ namespace Survey.Controllers
 			try
 			{
 				string survey = String.Empty;
-				//string email = string.Empty;
+				string email = string.Empty;
 				int index = 0;
 
 				foreach (var item in model)
 				{
 					survey = item.Survey;
-					//email = item.Email;
+					email = item.Email;
 					index = item.Index;
 					var indexTemp = index - 1;
 
@@ -164,8 +166,8 @@ namespace Survey.Controllers
 					});
 				}
 
-				//return RedirectToAction("Exam", new { survey = survey, index = index, email = email });
-				return RedirectToAction("Exam", new { survey = survey, index = index });
+				return RedirectToAction("Exam", new { survey = survey, index = index, email = email });
+				//return RedirectToAction("Exam", new { survey = survey, index = index });
 			}
 			catch (Exception e)
 			{
@@ -197,6 +199,18 @@ namespace Survey.Controllers
 			}
 
 			return sectionArray[index];
+		}
+
+		// Generate Random Email Address 
+		public static string GenerateEmailAddress()
+		{
+			return "vitalina.boiko" + GetRandomNumber() + "@gmail.com";
+		}
+
+		// Generate random number for email address
+		public static int GetRandomNumber()
+		{
+			return new Random().Next(100000, 100000000);
 		}
 
 		#endregion
