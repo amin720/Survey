@@ -14,7 +14,7 @@ namespace Survey.Core.Interfaces
 		Task<TBL_Sections> Get(int id, int surveyId);
 		Task<List<TBL_Sections>> GetAllBySurveyName(string surveyName);
 		Task Create(TBL_Sections sections);
-		Task Edit(TBL_Sections sections);
+		Task Edit(TBL_Sections sections, string olderSection);
 		Task Delete(string name, int surveyId);
 		IQueryable<TBL_Sections> Query(Expression<Func<TBL_Sections, bool>> predicate);
 	}

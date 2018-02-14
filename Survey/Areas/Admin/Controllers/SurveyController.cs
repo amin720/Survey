@@ -76,7 +76,8 @@ namespace Survey.Areas.Admin.Controllers
 				{
 					Surveyses = await _surveyRepository.GetAll(),
 					SurveyTitle = survey.Name,
-					SurveyDescription = survey.Description
+					SurveyDescription = survey.Description,
+					IsDisplay = survey.IsDisplay
 				};
 			}
 			else
@@ -130,13 +131,14 @@ namespace Survey.Areas.Admin.Controllers
 				}
 				else
 				{
-					survey.Name = surveys.NewSurveyTitle;
+					survey.Name = (surveys.SurveyTitle == surveys.NewSurveyTitle? surveys.SurveyTitle:surveys.NewSurveyTitle);
 					survey.Description = surveys.SurveyDescription;
+					survey.IsDisplay = surveys.IsDisplay;
 					await _surveyRepository.Edit(survey, surveys.SurveyTitle);
 				}
 				model.SurveyTitle = survey.Name;
 
-				return RedirectToAction("Section", new { surveyName = surveys.SurveyTitle });
+				return RedirectToAction("Section", new { surveyName = model.SurveyTitle });
 				//return View(model: model);
 			}
 			catch (Exception e)
@@ -148,6 +150,58 @@ namespace Survey.Areas.Admin.Controllers
 			}
 
 		}
+
+		// GET: Admin/Survey/Create
+		[Route("SurveyDelete/{surveyName}")]
+		[Authorize(Roles = "admin,user")]
+		public async Task<ActionResult> SurveyDelete(string surveyName)
+		{
+			var survey = await _surveyRepository.Get(surveyName);
+			var model = new TBL_Surveys
+			{
+				Name = survey.Name,
+				Description = survey.Description,
+				User_Id = survey.User_Id
+			};
+
+			var user = await GetloggedInUser();
+			ViewBag.Username = user.UserName;
+			ViewBag.DisplayName = user.DisplayName;
+
+			return View(model: model);
+		}
+		// Post: Admin/Survey/Create
+		[Route("SurveyDelete")]
+		[Authorize(Roles = "admin,user")]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> SurveyDelete(TBL_Surveys survey)
+		{
+			var user = await GetloggedInUser();
+			ViewBag.Username = user.UserName;
+			ViewBag.DisplayName = user.DisplayName;
+			var model = survey;
+			try
+			{
+				await _surveyRepository.Delete(survey.Name);
+
+				return RedirectToAction("Survey", new { surveyName = survey.Name });
+			}
+			catch (Exception e)
+			{
+
+				ModelState.AddModelError(string.Empty, e.Message);
+
+				return View(model: model);
+			}
+
+		}
+
+
+
+
+
+
 
 		// GET: Admin/Section/Create
 		[Route("Section")]
@@ -207,10 +261,10 @@ namespace Survey.Areas.Admin.Controllers
 				}
 				else
 				{
-					section.Name = sections.SectionTitle;
+					section.Name = sections.NewSectionTitle;
 					section.Description = sections.SectionDescription;
 
-					await _sectionRepository.Edit(section);
+					await _sectionRepository.Edit(section,sections.SectionTitle);
 				}
 				model.SurveyTitle = survey.Name;
 
@@ -264,6 +318,8 @@ namespace Survey.Areas.Admin.Controllers
 					QuestionTitle = question.Title,
 					QuestionDescription = question.Description,
 					QuestionImageUrl = question.ImageUrl,
+					StartLabel = question.StartLabel,
+					EndLabel = question.EndLabel,
 					Option = string.Join("-", answers)
 				};
 			}
@@ -350,45 +406,47 @@ namespace Survey.Areas.Admin.Controllers
 				}
 				else
 				{
-					TempData["question"] = new SurveyViewModel();
-					TempData["question"] = questions;
+					question.Title = questions.NewQuestionTitle;
+					question.Description = questions.QuestionDescription;
+					question.ImageUrl = questions.QuestionImageUrl;
+					question.StartLabel = questions.StartLabel;
+					question.EndLabel = questions.EndLabel;
+					
+					if (filePicker != null)
+					{
+						var allowedExtensions = new[] {
+							".Jpg", ".png", ".jpg", "jpeg"
+						};
 
-					return RedirectToAction("EditQuestionAnswer");
-					//if (filePicker != null)
-					//{
-					//	var allowedExtensions = new[] {
-					//		".Jpg", ".png", ".jpg", "jpeg"
-					//	};
+						var fileName = Path.GetFileName(filePicker.FileName);
+						var ext = Path.GetExtension(filePicker.FileName); //getting the extension(ex-.jpg)
+						if (allowedExtensions.Contains(ext)) //check what type of extension
+						{
+							string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
+							string myfile = name + "_" + question.Title + ext; //appending the name with id
+																					// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
+							var path = Path.Combine(Server.MapPath("~/images/"), myfile);
+							question.ImageUrl = "~/images/" + myfile;
+							filePicker.SaveAs(path);
+						}
+						else
+						{
+							ModelState.AddModelError(string.Empty, "Please choose only Image file");
+						}
+					}
 
-					//	var fileName = Path.GetFileName(filePicker.FileName);
-					//	var ext = Path.GetExtension(filePicker.FileName); //getting the extension(ex-.jpg)
-					//	if (allowedExtensions.Contains(ext)) //check what type of extension
-					//	{
-					//		string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
-					//		string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
-					//																// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
-					//		var path = Path.Combine(Server.MapPath("~/images/"), myfile);
-					//		modelQuestion.ImageUrl = "~/images/" + myfile;
-					//		filePicker.SaveAs(path);
-					//	}
-					//	else
-					//	{
-					//		ModelState.AddModelError(string.Empty, "Please choose only Image file");
-					//	}
-					//}
+					await _questionRepository.Edit(question,questions.QuestionTitle);
 
-					//await _questionRepository.Edit(modelQuestion);
+					question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
 
-					//question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
-
-					//foreach (var item in answers)
-					//{
-					//	await _answerRepository.Edit(new TBL_Answers
-					//	{
-					//		Text = item,
-					//		Question_Id = question.Id
-					//	});
-					//}
+					foreach (var item in answers)
+					{
+						await _answerRepository.Edit(new TBL_Answers
+						{
+							Text = item,
+							Question_Id = question.Id
+						});
+					}
 				}
 
 				question = await _questionRepository.Get(questions.QuestionTitle, section.Id);
@@ -412,94 +470,9 @@ namespace Survey.Areas.Admin.Controllers
 
 		}
 
-		// GET: Admin/Section/Edit
-		[HttpGet]
-		[Route("EditQuestionAnswer")]
-		[Authorize(Roles = "admin")]
-		public async Task<ActionResult> EditQuestionAnswer(SurveyViewModel question)
-		{
-			SurveyViewModel model = (SurveyViewModel)TempData["question"];
-
-			var user = await GetloggedInUser();
-			ViewBag.Username = user.UserName;
-			ViewBag.DisplayName = user.DisplayName;
-
-			return View(model);
-		}
-		// Post: Admin/Section/Create
-		[Route("EditQuestionAnswer")]
-		[Authorize(Roles = "admin")]
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> EditQuestionAnswer(SurveyViewModel question, HttpPostedFileBase filePicker)
-		{
-			var user = await GetloggedInUser();
-			ViewBag.Username = user.UserName;
-			ViewBag.DisplayName = user.DisplayName;
 
 
-			var survey = await _surveyRepository.Get(question.SurveyTitle);
-			var section = await _sectionRepository.Get(question.SectionTitle, survey.Id);
-			var questionModel = new TBL_Questions();
 
-
-			try
-			{
-				questionModel = await _questionRepository.Get(question.QuestionTitle, section.Id);
-
-				var answers = question.Option.Split('-');
-
-				var modelQuestion = new TBL_Questions
-				{
-					Title = question.QuestionTitle,
-					Section_Id = section.Id,
-					Description = question.QuestionDescription
-				};
-
-				if (filePicker != null)
-				{
-					var allowedExtensions = new[] {
-						".Jpg", ".png", ".jpg", "jpeg"
-					};
-
-					var fileName = Path.GetFileName(filePicker.FileName);
-					var ext = Path.GetExtension(filePicker.FileName); //getting the extension(ex-.jpg)
-					if (allowedExtensions.Contains(ext)) //check what type of extension
-					{
-						string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extensi
-						string myfile = name + "_" + modelQuestion.Title + ext; //appending the name with id
-																				// store the file inside ~/project folder(Img)E:\Project-Work\Zahra.Project\Restaurant\Restaurant.Web\assets\images\products\1.png
-						var path = Path.Combine(Server.MapPath("~/images/"), myfile);
-						modelQuestion.ImageUrl = "~/images/" + myfile;
-						filePicker.SaveAs(path);
-					}
-					else
-					{
-						ModelState.AddModelError(string.Empty, "Please choose only Image file");
-					}
-				}
-
-				await _questionRepository.Edit(modelQuestion, question.QuestionTitle);
-
-				questionModel = await _questionRepository.Get(question.QuestionTitle, section.Id);
-
-				foreach (var item in answers)
-				{
-					await _answerRepository.Edit(new TBL_Answers
-					{
-						Text = item,
-						Question_Id = questionModel.Id
-					});
-				}
-
-				return RedirectToAction("QuestionAnswer", new { surveyName = question.SurveyTitle, sectionName = question.SectionTitle });
-			}
-			catch (Exception e)
-			{
-				ModelState.AddModelError(string.Empty, e.Message);
-				return View(question);
-			}
-		}
 
 
 		public async Task<ActionResult> ExportToExcel()
@@ -543,8 +516,6 @@ namespace Survey.Areas.Admin.Controllers
 			Response.End();
 			return View("Survey");
 		}
-
-
 
 
 		#region Method

@@ -11,6 +11,7 @@ namespace Survey.Areas.Admin.ViewModels
 		public string SurveyTitle { get; set; }
 		public string SurveyDescription { get; set; }
 		public string NewSurveyTitle { get; set; }
+		public bool? IsDisplay { get; set; }
 
 		public string SectionTitle { get; set; }
 		public string SectionDescription { get; set; }

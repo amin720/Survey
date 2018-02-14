@@ -1,0 +1,39 @@
+﻿@model Survey.Core.Entities.TBL_Surveys
+
+@{
+    ViewBag.Title = "SurveyDelete";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>حذف نظر سنجی</h2>
+
+<h3>آیا شما مطمئن هستید که این نظر سنجی و تمام بخش ها و سوالات پاک شود؟</h3>
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-bloody-200" })
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">عنوان نظرسنجی</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="Name" placeholder="عنوان نظرسنجی" value="@Model.Name" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">توضیحات</label>
+            <div class="col-md-9">
+                <textarea class="form-control" rows="5" name="Description">@Model.Description</textarea>
+            </div>
+        </div>
+
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -151,6 +151,7 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="350" />
           <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="IsDisplay" Type="bit" />
         </EntityType>
         <Association Name="FK_Answer_Question">
           <End Role="TBL_Questions" Type="Self.TBL_Questions" Multiplicity="1" />
@@ -397,7 +398,6 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
           <EntitySet Name="TBL_Respondents" EntityType="SurveyModel.TBL_Respondents" />
           <EntitySet Name="TBL_RSQA" EntityType="SurveyModel.TBL_RSQA" />
           <EntitySet Name="TBL_Sections" EntityType="SurveyModel.TBL_Sections" />
-          <EntitySet Name="TBL_Surveys" EntityType="SurveyModel.TBL_Surveys" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="SurveyModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
@@ -405,10 +405,6 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="SurveyModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Survey_AspNetUsers" Association="SurveyModel.FK_Survey_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="TBL_Surveys" EntitySet="TBL_Surveys" />
           </AssociationSet>
           <AssociationSet Name="FK_Answer_Question" Association="SurveyModel.FK_Answer_Question">
             <End Role="TBL_Questions" EntitySet="TBL_Questions" />
@@ -434,6 +430,15 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
             <End Role="TBL_Sections" EntitySet="TBL_Sections" />
             <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
           </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="SurveyModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="TBL_Surveys" EntityType="SurveyModel.TBL_Surveys" />
+          <AssociationSet Name="FK_Survey_AspNetUsers" Association="SurveyModel.FK_Survey_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="TBL_Surveys" EntitySet="TBL_Surveys" />
+          </AssociationSet>
           <AssociationSet Name="FK_RSQA_Survey" Association="SurveyModel.FK_RSQA_Survey">
             <End Role="TBL_Surveys" EntitySet="TBL_Surveys" />
             <End Role="TBL_RSQA" EntitySet="TBL_RSQA" />
@@ -441,10 +446,6 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
           <AssociationSet Name="FK_Section_Survey" Association="SurveyModel.FK_Section_Survey">
             <End Role="TBL_Surveys" EntitySet="TBL_Surveys" />
             <End Role="TBL_Sections" EntitySet="TBL_Sections" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="SurveyModel.AspNetUserRoles">
-            <End Role="AspNetRole" EntitySet="AspNetRoles" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -498,8 +499,8 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="SurveyModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="SurveyModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
-          <NavigationProperty Name="TBL_Surveys" Relationship="SurveyModel.FK_Survey_AspNetUsers" FromRole="AspNetUser" ToRole="TBL_Surveys" />
           <NavigationProperty Name="AspNetRoles" Relationship="SurveyModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="TBL_Surveys" Relationship="SurveyModel.FK_Survey_AspNetUsers" FromRole="AspNetUser" ToRole="TBL_Surveys" />
         </EntityType>
         <EntityType Name="Statistic">
           <Key>
@@ -582,18 +583,6 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
           <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Section" FromRole="TBL_Sections" ToRole="TBL_RSQA" />
           <NavigationProperty Name="TBL_Surveys" Relationship="SurveyModel.FK_Section_Survey" FromRole="TBL_Sections" ToRole="TBL_Surveys" />
         </EntityType>
-        <EntityType Name="TBL_Surveys">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
-          <Property Name="User_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="SurveyModel.FK_Survey_AspNetUsers" FromRole="TBL_Surveys" ToRole="AspNetUser" />
-          <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Survey" FromRole="TBL_Surveys" ToRole="TBL_RSQA" />
-          <NavigationProperty Name="TBL_Sections" Relationship="SurveyModel.FK_Section_Survey" FromRole="TBL_Surveys" ToRole="TBL_Sections" />
-        </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -619,18 +608,6 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
             </Principal>
             <Dependent Role="AspNetUserLogin">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Survey_AspNetUsers">
-          <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="SurveyModel.TBL_Surveys" Role="TBL_Surveys" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TBL_Surveys">
-              <PropertyRef Name="User_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -706,6 +683,35 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="SurveyModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="TBL_Surveys">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="User_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsDisplay" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="SurveyModel.FK_Survey_AspNetUsers" FromRole="TBL_Surveys" ToRole="AspNetUser" />
+          <NavigationProperty Name="TBL_RSQA" Relationship="SurveyModel.FK_RSQA_Survey" FromRole="TBL_Surveys" ToRole="TBL_RSQA" />
+          <NavigationProperty Name="TBL_Sections" Relationship="SurveyModel.FK_Section_Survey" FromRole="TBL_Surveys" ToRole="TBL_Sections" />
+        </EntityType>
+        <Association Name="FK_Survey_AspNetUsers">
+          <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="SurveyModel.TBL_Surveys" Role="TBL_Surveys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBL_Surveys">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RSQA_Survey">
           <End Type="SurveyModel.TBL_Surveys" Role="TBL_Surveys" Multiplicity="1" />
           <End Type="SurveyModel.TBL_RSQA" Role="TBL_RSQA" Multiplicity="*" />
@@ -729,10 +735,6 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
               <PropertyRef Name="Survey_Id" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="SurveyModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="SurveyModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -858,16 +860,6 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TBL_Surveys">
-            <EntityTypeMapping TypeName="SurveyModel.TBL_Surveys">
-              <MappingFragment StoreEntitySet="TBL_Surveys">
-                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="SurveyModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetUser">
               <ScalarProperty Name="Id" ColumnName="UserId" />
@@ -876,6 +868,17 @@ warning 6013: The table/view 'Survey.dbo.Country' does not have a primary key de
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="TBL_Surveys">
+            <EntityTypeMapping TypeName="SurveyModel.TBL_Surveys">
+              <MappingFragment StoreEntitySet="TBL_Surveys">
+                <ScalarProperty Name="IsDisplay" ColumnName="IsDisplay" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

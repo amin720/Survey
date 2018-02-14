@@ -25,6 +25,7 @@ namespace Survey.Core.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string User_Id { get; set; }
+        public Nullable<bool> IsDisplay { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

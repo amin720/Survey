@@ -11,6 +11,7 @@ namespace Survey.Core.Interfaces
 	{
 		Task<TBL_Surveys> Get(string name);
 		Task<TBL_Surveys> Get(int id);
+		Task<TBL_Surveys> Get();
 		Task<IEnumerable<TBL_Surveys>> GetAll();
 		Task Create(TBL_Surveys surveys);
 		Task Edit(TBL_Surveys surveys,string olderSurvey);

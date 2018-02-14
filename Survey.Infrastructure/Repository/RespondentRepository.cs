@@ -37,7 +37,7 @@ namespace Survey.Infrastructure.Repository
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(respondents.Email);
+				var model = await db.TBL_Respondents.SingleOrDefaultAsync(s => s.Email == respondents.Email);
 
 				if (model != null)
 				{
@@ -55,7 +55,7 @@ namespace Survey.Infrastructure.Repository
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(respondents.Email);
+				var model = await db.TBL_Respondents.SingleOrDefaultAsync(s => s.Email == respondents.Email);
 
 				if (model == null)
 				{
@@ -77,7 +77,7 @@ namespace Survey.Infrastructure.Repository
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(email);
+				var model = await db.TBL_Respondents.SingleOrDefaultAsync(s => s.Email == email);
 
 				if (model == null)
 				{

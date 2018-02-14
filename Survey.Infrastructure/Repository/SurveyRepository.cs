@@ -17,6 +17,17 @@ namespace Survey.Infrastructure.Repository
 				return await db.TBL_Surveys.SingleOrDefaultAsync(s => s.Name == name);
 			}
 		}
+		/// <summary>
+		/// Get First Survey
+		/// </summary>
+		/// <returns></returns>
+		public async Task<TBL_Surveys> Get()
+		{
+			using (var db = new SurveyEntities())
+			{
+				return await db.TBL_Surveys.SingleOrDefaultAsync(s => s.IsDisplay == true);
+			}
+		}
 		public async Task<TBL_Surveys> Get(int id)
 		{
 			using (var db = new SurveyEntities())
@@ -35,7 +46,8 @@ namespace Survey.Infrastructure.Repository
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(surveys.Name);
+				//var model = await Get(surveys.Name);
+				var model = await db.TBL_Surveys.SingleOrDefaultAsync(s => s.Name == surveys.Name);
 
 				if (model != null)
 				{
@@ -50,7 +62,8 @@ namespace Survey.Infrastructure.Repository
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(olderSurvey);
+				//var model = await Get(olderSurvey);
+				var model = await db.TBL_Surveys.SingleOrDefaultAsync(s => s.Name == olderSurvey);
 
 				if (model == null)
 				{
@@ -60,6 +73,7 @@ namespace Survey.Infrastructure.Repository
 				model.Name = surveys.Name;
 				model.Description = surveys.Description;
 				model.User_Id = surveys.User_Id;
+				model.IsDisplay = surveys.IsDisplay;
 
 				await db.SaveChangesAsync();
 			}
@@ -68,7 +82,7 @@ namespace Survey.Infrastructure.Repository
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(name);
+				var model = await db.TBL_Surveys.SingleOrDefaultAsync(s => s.Name == name);
 
 				if (model == null)
 				{

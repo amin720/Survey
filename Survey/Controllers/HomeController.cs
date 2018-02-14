@@ -45,7 +45,7 @@ namespace Survey.Controllers
 		[Route("")]
 		public async Task<ActionResult> Index()
 		{
-			var survey = await _surveyRepository.Get("صمیمت بین زوجین");
+			var survey = await _surveyRepository.Get();
 
 			ViewBag.PTitle = survey.Name;
 			ViewBag.PDescription = survey.Description;
@@ -65,7 +65,6 @@ namespace Survey.Controllers
 				await _respondentRepository.Create(model);
 
 				return RedirectToAction("Exam", new { survey = survey, index = 0, email = model.Email });
-				//return RedirectToAction("Exam", new { survey = survey, index = 0 });
 			}
 			catch (Exception e)
 			{
@@ -77,13 +76,19 @@ namespace Survey.Controllers
 		[AllowAnonymous]
 		[HttpGet]
 		public async Task<ActionResult> Exam(string survey, int index, string email)
-		//public async Task<ActionResult> Exam(string survey, int index)
+
 		{
+
 			var model = new List<ExamViewModel>();
+			var modelSection = new List<TBL_Sections>();
 
 			var sections = await _sectionRepository.GetAllBySurveyName(survey);
 
-			if (sections.Count == index)
+			int pageSize = 6;
+			int pageNumber = index;
+			var arr = sections.Skip(pageNumber * pageSize).Take(pageSize);
+
+			if (arr.ToArray().Length == 0)
 			{
 				return RedirectToAction("Complete");
 			}
@@ -92,43 +97,62 @@ namespace Survey.Controllers
 			var surveyModel = await _surveyRepository.Get(survey);
 			var section = await _sectionRepository.Get(sectionArray, surveyModel.Id);
 
-			var questions = await _questionRepository.GetAllBySectionName(await GetSection(survey, index));
+			//var questions = await _questionRepository.GetAllBySectionName(await GetSection(survey, index));
 
-			foreach (var item in questions)
+
+			//index = index == 0 ? index : index - 1;
+
+			
+
+			for (int c = 0; c < arr.ToArray().Length; c++)
 			{
-				var answers = await _answerRepository.GetAllByQuestionName(item.Title);
-				var answerArray = new string[answers.Count];
 
-				var i = 0;
-				foreach (var ans in answers)
+				var questions = await _questionRepository.GetAllBySectionName(arr.ToArray()[c].Name);
+
+				foreach (var item in questions)
 				{
-					answerArray[i] = ans.Text;
-					i++;
+					var answers = await _answerRepository.GetAllByQuestionName(item.Title);
+					var answerArray = new string[answers.Count];
+
+					var i = 0;
+					foreach (var ans in answers)
+					{
+						answerArray[i] = ans.Text;
+						i++;
+					}
+
+					var answer = string.Join("-", answerArray);
+
+					model.Add(new ExamViewModel
+					{
+						QuestionTitle = item.Title,
+						QuestionDescription = item.Description,
+						QuestionImgeUrl = item.ImageUrl,
+						Answer = answer,
+						StartLabel = item.StartLabel,
+						EndLabel = item.EndLabel,
+						Section_Id = item.Section_Id,
+					});
 				}
 
-				var answer = string.Join("-", answerArray);
+				modelSection.Add(arr.ToArray()[c]);
 
-				model.Add(new ExamViewModel
-				{
-					QuestionTitle = item.Title,
-					QuestionDescription = item.Description,
-					QuestionImgeUrl = item.ImageUrl,
-					Answer = answer,
-					StartLabel = item.StartLabel,
-					EndLabel = item.EndLabel
-				});
 			}
 
+
+			ViewBag.ListSection = modelSection;
 			ViewBag.ListQA = model;
 			ViewBag.SurveyTitle = survey;
-			ViewBag.PTitle = section.Name;
-			ViewBag.PDescription = section.Description;
+			ViewBag.PTitle = survey;
+			//ViewBag.PTitle = section.Name;
+			//ViewBag.PDescription = section.Description;
+			//ViewBag.Index = modelSection.Count;
 			ViewBag.Index = index;
 			ViewBag.Email = email;
-			ViewBag.Total = sections.Count;
-			ViewBag.Current = index + 1;
+			//ViewBag.Total = sections.Count - modelSection.Count;
+			//ViewBag.Current = index + 1;
 
-			return View();
+			return View(viewName: "Exam2");
 		}
 
 		[ValidateAntiForgeryToken]
@@ -155,8 +179,8 @@ namespace Survey.Controllers
 					index = item.Index;
 					var indexTemp = index - 1;
 
-					var sectionArrayIndex = await GetSection(item.Survey, indexTemp);
-
+					//var sectionArrayIndex = await GetSection(item.Survey, indexTemp);
+					var sectionArrayIndex = item.Section;
 
 					var surveyModel = await _surveyRepository.Get(item.Survey);
 					var sectionModel = await _sectionRepository.Get(sectionArrayIndex, surveyModel.Id);
@@ -175,7 +199,6 @@ namespace Survey.Controllers
 				}
 
 				return RedirectToAction("Exam", new { survey = survey, index = index, email = email });
-				//return RedirectToAction("Exam", new { survey = survey, index = index });
 			}
 			catch (Exception e)
 			{
@@ -184,7 +207,7 @@ namespace Survey.Controllers
 				ViewBag.PTitle = section;
 
 				ModelState.AddModelError(String.Empty, e.Message);
-				return View();
+				return View(viewName: "Exam2");
 			}
 		}
 

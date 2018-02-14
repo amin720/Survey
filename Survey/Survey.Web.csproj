@@ -161,6 +161,7 @@
     <Content Include="Areas\Admin\Assets\css\styles.css" />
     <Content Include="Areas\Admin\Assets\css\uploadImage.css" />
     <Content Include="Areas\Admin\Assets\css\vendor\bootstrap-rtl.min.css" />
+    <Content Include="Areas\Admin\Assets\css\vendor\bootstrap-select.min.css" />
     <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content-style.css" />
     <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content.inline.min.css" />
     <Content Include="Areas\Admin\Assets\css\vendor\tinymce\content.min.css" />
@@ -207,6 +208,7 @@
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-daterange\daterangepicker.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-datetimepicker\bootstrap-datetimepicker.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-rtl.min.js" />
+    <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select.min.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\bootstrap-select.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-ar_AR.js" />
     <Content Include="Areas\Admin\Assets\js\vendor\bootstrap-select\i18n\defaults-bg_BG.js" />
@@ -572,13 +574,15 @@
     <Content Include="Areas\Admin\Views\Survey\Survey.cshtml" />
     <Content Include="Areas\Admin\Views\Survey\Section.cshtml" />
     <Content Include="Areas\Admin\Views\Survey\QuestionAnswer.cshtml" />
-    <Content Include="Areas\Admin\Views\Survey\EditQuestionAnswer.cshtml" />
+    <Content Include="Areas\Admin\Views\Survey\SurveyDelete.cshtml" />
+    <Content Include="Areas\Admin\Views\Survey\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <Content Include="Views\Home\Exam.cshtml" />
     <Content Include="Views\Home\Complete.cshtml" />
+    <Content Include="Views\Home\Exam2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -588,7 +592,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Assets\" />
     <Folder Include="Images\" />
     <Folder Include="Models\" />
   </ItemGroup>

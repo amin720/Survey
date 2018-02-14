@@ -15,19 +15,19 @@
         <EntityTypeShape EntityType="SurveyModel.TBL_Respondents" Width="1.5" PointX="12" PointY="3.5" />
         <EntityTypeShape EntityType="SurveyModel.TBL_RSQA" Width="1.5" PointX="14.25" PointY="5.25" />
         <EntityTypeShape EntityType="SurveyModel.TBL_Sections" Width="1.5" PointX="7.5" PointY="7.25" />
-        <EntityTypeShape EntityType="SurveyModel.TBL_Surveys" Width="1.5" PointX="5.25" PointY="3.5" />
         <AssociationConnector Association="SurveyModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="SurveyModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="SurveyModel.FK_Survey_AspNetUsers" />
         <AssociationConnector Association="SurveyModel.FK_Answer_Question" />
         <AssociationConnector Association="SurveyModel.FK_RSQA_Answer" />
         <AssociationConnector Association="SurveyModel.FK_Question_Section" />
         <AssociationConnector Association="SurveyModel.FK_RSQA_Question" />
         <AssociationConnector Association="SurveyModel.FK_RSQA_Respondent" />
         <AssociationConnector Association="SurveyModel.FK_RSQA_Section" />
+        <AssociationConnector Association="SurveyModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="SurveyModel.TBL_Surveys" Width="1.5" PointX="5.25" PointY="3.125" />
+        <AssociationConnector Association="SurveyModel.FK_Survey_AspNetUsers" />
         <AssociationConnector Association="SurveyModel.FK_RSQA_Survey" />
         <AssociationConnector Association="SurveyModel.FK_Section_Survey" />
-        <AssociationConnector Association="SurveyModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

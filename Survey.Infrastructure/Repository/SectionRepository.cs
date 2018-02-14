@@ -40,7 +40,7 @@ namespace Survey.Infrastructure.Repository
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(sections.Name, sections.Survey_Id);
+				var model = await db.TBL_Sections.SingleOrDefaultAsync(s => s.Name == sections.Name && s.Survey_Id == sections.Survey_Id);
 
 				if (model != null)
 				{
@@ -51,11 +51,11 @@ namespace Survey.Infrastructure.Repository
 				await db.SaveChangesAsync();
 			}
 		}
-		public async Task Edit(TBL_Sections sections)
+		public async Task Edit(TBL_Sections sections,string olderSection)
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(sections.Name, sections.Survey_Id);
+				var model = await db.TBL_Sections.SingleOrDefaultAsync(s => s.Name == olderSection && s.Survey_Id == sections.Survey_Id);
 
 				if (model == null)
 				{
@@ -74,7 +74,7 @@ namespace Survey.Infrastructure.Repository
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await Get(name, surveyId);
+				var model = await db.TBL_Sections.SingleOrDefaultAsync(s => s.Name == name && s.Survey_Id == surveyId);
 
 				if (model == null)
 				{

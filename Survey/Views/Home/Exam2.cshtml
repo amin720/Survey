@@ -1,0 +1,84 @@
+﻿@using Survey.ViewModels
+@model Survey.ViewModels.ExamViewModel
+@{
+    ViewBag.Title = "Exam";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+
+    var ListQA = new List<ExamViewModel>();
+    ListQA = ViewBag.ListQA;
+
+    var count = 0;
+
+    int index = ViewBag.Index;
+    //int index = Model.Index;
+
+    index++;
+}
+
+@using (Html.BeginForm("Exam", "Home", FormMethod.Post, new { @class = "form-horizontal text-black text-right" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-bloody-200" })
+
+    <h6 class="text-bloody-300">لطفا به تمامی سوالات پاسخ دهید.</h6>
+
+
+    foreach (var tblsection in ViewBag.ListSection)
+    {
+
+        <h4 class="text-right text-bloody-400">@tblsection.Name</h4>
+        <p>
+            @tblsection.Description
+        </p>
+        foreach (var item in ListQA)
+        {
+
+            if (item.Section_Id == tblsection.Id)
+            {
+                <input type="hidden" name="[@count].Survey" value="@ViewBag.SurveyTitle" />
+                <input type="hidden" name="[@count].Index" value="@index" />
+                <input type="hidden" name="[@count].Section" value="@tblsection.Name" />
+                <input type="hidden" name="[@count].Email" value="@ViewBag.Email" />
+
+                var answers = item.Answer.Split('-');
+
+                <div class="form-group">
+                    <h2 name="[@count].QuestionTitle">@item.QuestionTitle</h2>
+                    <input type="hidden" name="[@count].QuestionTitle" value="@item.QuestionTitle" />
+                    <p name="[@count].QuestionDescription">@item.QuestionDescription</p>
+                    <input type="hidden" name="[@count].QuestionDescription" value="@item.QuestionDescription" />
+
+                    @if (!string.IsNullOrEmpty(item.QuestionImgeUrl))
+                    {
+                        <img src="@Url.Content(item.QuestionImgeUrl)" class="img-responsive img-rounded pull-right" />
+                        <input type="hidden" name="[@count].QuestionImgeUrl" value="@item.QuestionImgeUrl" />
+
+                    }
+
+                    <div class="col-xs-12">
+                        <sup class="pull-right @*vertical-text*@">@item.EndLabel</sup>
+                        <div class="pull-right">
+                            @foreach (string t in answers)
+                            {
+
+                                <div class="md-radio md-radio-inline">
+                                    <input id="@item.QuestionTitle@t" type="radio" name="[@count].Answer" value="@t" required>
+                                    <label for="@item.QuestionTitle@t">@t</label>
+                                </div>
+
+                            }
+                        </div>
+                        <sup class="pull-left @*vertical-text*@">@item.StartLabel</sup>
+                    </div>
+                </div>
+count++;
+            }
+
+        }
+
+    }
+
+    <input type="submit" class="btn btn-block btn-info" value="قسمت بعدی" />
+}
+
+
