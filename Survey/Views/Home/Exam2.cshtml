@@ -54,24 +54,60 @@
                         <input type="hidden" name="[@count].QuestionImgeUrl" value="@item.QuestionImgeUrl" />
 
                     }
+                    <div class="col-xs-2">
+                        <label class="pull-right @*vertical-text*@" style="font-size:70%">@item.EndLabel</label>
+                    </div>
 
-                    <div class="col-xs-12">
-                        <sup class="pull-right @*vertical-text*@">@item.EndLabel</sup>
-                        <div class="pull-right">
-                            @foreach (string t in answers)
-                            {
+                    @if (answers.Length > 9)
+                    {
+                        <div class="col-xs-8">
+                            <div class="pull-right">
+                                @foreach (string t in answers)
+                                {
 
-                                <div class="md-radio md-radio-inline">
+                                <div class="btn-radio btn-radio-inline">
                                     <input id="@item.QuestionTitle@t" type="radio" name="[@count].Answer" value="@t" required>
                                     <label for="@item.QuestionTitle@t">@t</label>
                                 </div>
 
-                            }
+                                }
+                            </div>
                         </div>
-                        <sup class="pull-left @*vertical-text*@">@item.StartLabel</sup>
+                    }
+                    else
+                    {
+                        <div class="col-xs-12">
+                            <div class="pull-right">
+                                @foreach (string t in answers)
+                                {
+                                    if (t.Length > 20)
+                                    {
+                                        <div class="md-radio">
+                                            <input id="@item.QuestionTitle@t" type="radio" name="[@count].Answer" value="@t" required>
+                                            <label for="@item.QuestionTitle@t">@t</label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="md-radio md-radio-inline">
+                                            <input id="@item.QuestionTitle@t" type="radio" name="[@count].Answer" value="@t" required>
+                                            <label class="md-label" for="@item.QuestionTitle@t">@t</label>
+                                        </div>
+                                    }
+                                
+
+                                }
+
+                            </div>
+                        </div>
+                    }
+
+
+                    <div class="col-xs-2">
+                        <label class="pull-left @*vertical-text*@" style="font-size:70%">@item.StartLabel</label>
                     </div>
                 </div>
-count++;
+                count++;
             }
 
         }
