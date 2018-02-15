@@ -64,7 +64,12 @@ namespace Survey.Controllers
 
 				await _respondentRepository.Create(model);
 
-				return RedirectToAction("Exam", new { survey = survey, index = 0, email = model.Email });
+				TempData["survey"] = survey;
+				TempData["index"] = 0;
+				TempData["email"] = model.Email;
+
+				//return RedirectToAction("Exam", new { survey = survey, index = 0, email = model.Email });
+				return RedirectToAction("Exam");
 			}
 			catch (Exception e)
 			{
@@ -75,9 +80,12 @@ namespace Survey.Controllers
 
 		[AllowAnonymous]
 		[HttpGet]
-		public async Task<ActionResult> Exam(string survey, int index, string email)
-
+		//public async Task<ActionResult> Exam(string survey, int index, string email)
+		public async Task<ActionResult> Exam()
 		{
+			var survey = (string) TempData["survey"];
+			var index = (int) TempData["index"];
+			var email = (string) TempData["email"];
 
 			var model = new List<ExamViewModel>();
 			var modelSection = new List<TBL_Sections>();
@@ -198,7 +206,12 @@ namespace Survey.Controllers
 					});
 				}
 
-				return RedirectToAction("Exam", new { survey = survey, index = index, email = email });
+				TempData["survey"] = survey;
+				TempData["index"] = index;
+				TempData["email"] = email;
+
+				//return RedirectToAction("Exam", new { survey = survey, index = index, email = email });
+				return RedirectToAction("Exam");
 			}
 			catch (Exception e)
 			{

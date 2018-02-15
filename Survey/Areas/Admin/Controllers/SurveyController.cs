@@ -445,7 +445,7 @@ namespace Survey.Areas.Admin.Controllers
 						{
 							Text = item,
 							Question_Id = question.Id
-						});
+						}, item);
 					}
 				}
 

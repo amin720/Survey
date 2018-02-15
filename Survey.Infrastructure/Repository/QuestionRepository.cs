@@ -74,6 +74,9 @@ namespace Survey.Infrastructure.Repository
 				model.Description = questions.Description;
 				model.Section_Id = questions.Section_Id;
 				model.ImageUrl = questions.ImageUrl;
+				model.StartLabel = questions.StartLabel;
+				model.EndLabel = questions.EndLabel;
+
 
 				await db.SaveChangesAsync();
 			}

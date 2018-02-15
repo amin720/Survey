@@ -51,11 +51,11 @@ namespace Survey.Infrastructure.Repository
 				await db.SaveChangesAsync();
 			}
 		}
-		public async Task Edit(TBL_Answers answers)
+		public async Task Edit(TBL_Answers answers,string olderText)
 		{
 			using (var db = new SurveyEntities())
 			{
-				var model = await db.TBL_Answers.SingleOrDefaultAsync(s => s.Id == answers.Id && s.Question_Id == answers.Question_Id);
+				var model = await db.TBL_Answers.SingleOrDefaultAsync(s => s.Text == olderText && s.Question_Id == answers.Question_Id);
 
 				if (model == null)
 				{
